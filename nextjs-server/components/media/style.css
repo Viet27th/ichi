@@ -1,0 +1,65 @@
+/* upload tab css*/
+#form-upload-images{
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border: 4px dashed rgba(0,0,0,.5);
+}
+#form-upload-images p{
+  position: relative;
+  top: 27px;
+  text-align: center;
+  color: rgba(0,0,0,.27);
+  font-family: Arial;
+  font-weight: bold;
+}
+#form-upload-images input{
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  z-index: 2;
+}
+#form-upload-images .wrapper-upload-button{
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  bottom: 27px;
+  z-index: 1;
+}
+
+/* media tab css */
+#show-files, #file-details {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+#show-files .file {
+  height: 115px;
+}
+
+#show-files .file img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+#show-files .file.selected {
+  position: relative;
+  border: 3px solid rgba(16, 116, 201, 0.9);
+}
+
+#show-files .file.selected::after {
+  font-family: "Font Awesome 5 Free";
+  content: '\f058';
+  position: absolute;
+  top: -5px;
+  color: #217cd5;
+  right: 6px;
+  font-size: 27px;
+}
+

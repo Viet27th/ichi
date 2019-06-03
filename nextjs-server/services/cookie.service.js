@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 export default {
   /**
    *
-   * @param {string} value - token value
+   * @param {string} cname - cookie name
+   * @param {string} value - cookie value
    * @param {string|number} expiredTime - Millisecond from 1970 to expire date
    */
   clientSetCookie: (cname, value, expiredTime) => {

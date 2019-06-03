@@ -5,7 +5,7 @@
 /nextjs-server/node_modules
 
 # production
-/build
+/nextjs-server/.next
 
 # misc
 .DS_Store

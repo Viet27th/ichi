@@ -40,7 +40,7 @@ class RegisterScene extends React.Component {
   
   render() {
     return (
-      <div id='wrapped-register'>
+      <div id='wrapped-register' style={{backgroundImage: `url('http://localhost:2709/img/login-bg.jpg')`}}>
         <div id='register'>
           <h2>Register</h2>
           

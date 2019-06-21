@@ -5,9 +5,10 @@
  * @returns {Promise<data>}
  */
 let findOneOrCreate = async function (query = {}, data = {}) {
+  // Keep in mind: if you query by a document's _id but value you passed into is not as id format will make the bug.
   try {
     // 'this' now refers to the Model instance
-    let docs = await this.findOne(query).lean().exec();
+    let docs = await this.findOne(query).exec();
     if (docs) {
       return docs;
     } else {

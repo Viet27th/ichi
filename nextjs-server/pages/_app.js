@@ -1,5 +1,6 @@
 import React from 'react';
 import App, {Container} from 'next/app';
+import Router from 'next/router';
 import {AlertComponentEvolution} from '../components/alert';
 import {ConfirmComponentEvolution} from '../components/confirm';
 import {SpinnerComponentEvolution} from '../components/spinner';
@@ -18,6 +19,7 @@ import {axiosInstance} from '../services/axios.service';
 import {express_api} from '../services/express_api.service';
 import {Provider} from 'react-redux';
 import withReduxStore from '../redux_store';
+
 
 class MyApp extends App {
   // In page as login.js, register.js, hell is different with ctx
@@ -115,9 +117,8 @@ class MyApp extends App {
         </Container>
       );
     }
-    
-    
   }
+  
 }
 
 export default withReduxStore(MyApp);

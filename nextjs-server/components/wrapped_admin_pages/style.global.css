@@ -10643,10 +10643,11 @@ a.text-lime:focus {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-.fade {
-  opacity: 0;
-  transition: opacity .3s linear;
-}
+/* @HIGHLIGHT: I'm making a change css library */
+/*.fade {*/
+  /*opacity: 0;*/
+  /*transition: opacity .3s linear;*/
+/*}*/
 .text-ellipsis {
   white-space: nowrap !important;
   overflow: hidden !important;

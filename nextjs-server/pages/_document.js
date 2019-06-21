@@ -21,10 +21,15 @@ class MyDocument extends Document {
           {/* Tell the browser to be responsive to screen width */}
           <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
           <link rel="stylesheet" href='/static/library/bootstrap-4.3.1-dist/bootstrap.min.css'/>
-          <link rel="stylesheet" href='/static/library/font-awesome/5.0/css/fontawesome-all.min.css'/>
+          <link rel="stylesheet" href='/static/library/font-awesome/fontawesome-free-5.9.0-web/css/all.css'/>
           <link rel="stylesheet" href='/static/library/select2/dist/css/select2.min.css'/>
           <link rel="stylesheet" href='/static/library/flatpickr/dist/flatpickr.min.css'/>
           <link rel="stylesheet" href='/static/library/checkbox-style/checkbox-style.css'/>
+          <link rel="stylesheet" type="text/css" href="/static/library/slider-pro-master/dist/css/slider-pro.min.css" media="screen"/>
+          <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick.css"/>
+          <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick-theme.css"/>
+          <link rel="stylesheet" type="text/css" href="/static/library/swiper-master/dist/css/swiper.min.css"/>
+          <link rel="stylesheet" type="text/css" href="/static/library/cropperjs/dist/cropper.min.css"/>
           
         </Head>
         <body id="body">
@@ -37,6 +42,10 @@ class MyDocument extends Document {
           <script src='/static/library/ckeditor/ckeditor.js'></script>
           <script src='/static/library/select2/dist/js/select2.full.min.js'></script>
           <script src='/static/library/flatpickr/dist/flatpickr.min.js'></script>
+          <script type="text/javascript" src="/static/library/slider-pro-master/dist/js/jquery.sliderPro.min.js"></script>
+          <script type="text/javascript" src="/static/library/slick-1.8.1/slick/slick.min.js"></script>
+          <script type="text/javascript" src="/static/library/swiper-master/dist/js/swiper.min.js"></script>
+          <script type="text/javascript" src="/static/library/cropperjs/dist/cropper.min.js"></script>
         
         </body>
       </Html>

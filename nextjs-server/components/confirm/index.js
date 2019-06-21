@@ -14,16 +14,22 @@ class ConfirmComponent extends React.Component {
     return (
       <div>
         <div id="vp-diag-bg" onClick={this.cancelClicked}>
-          <div className="vp-diag col-11 col-sm-5 col-md-3" onClick={(e) => {e.stopPropagation();}}>
+          <div className="vp-diag col-11 col-sm-5 col-md-3" onClick={(e) => {
+            e.stopPropagation();
+          }}>
             <div className="vp-diag-header">
-              <span id="vp-diag-close" onClick={this.cancelClicked}><i className="fa fa-times" aria-hidden="true"></i></span>
+              <span id="vp-diag-close" onClick={this.cancelClicked}><i className="fa fa-times"
+                                                                       aria-hidden="true"></i></span>
             </div>
-            <div className="vp-diag-body mb-3 text-center">
-              {this.message}
+            <div className="vp-diag-body mb-3 text-center"  dangerouslySetInnerHTML={{ __html: this.message }} >
+              {/*Render HTML string as real HTML in a React component*/}
             </div>
+            
             <div className="vp-diag-footer text-center">
               <button id="vp-diag-ok" type="button" className="btn btn-success m-2" onClick={this.okClicked}>Ok</button>
-              <button id="vp-diag-cancel" type="button" className="btn btn-danger m-2" onClick={this.cancelClicked}>Cancel</button>
+              <button id="vp-diag-cancel" type="button" className="btn btn-danger m-2"
+                      onClick={this.cancelClicked}>Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -34,24 +40,32 @@ class ConfirmComponent extends React.Component {
   };
   
   okClicked = () => {
-    this.success();
-    hide();
+    if(typeof this.success === 'function') {
+      this.success();
+      hide();
+    } else {
+      hide();
+    }
   };
   
   cancelClicked = () => {
-    this.cancel();
-    hide();
+    if(typeof this.cancel === 'function') {
+      this.cancel();
+      hide();
+    } else {
+      hide();
+    }
   };
 }
 
 
-let show = function (message = "Are you sure?", success = () => {}, cancel = () => {}) {
+let show = function (message = 'Are you sure?', success, cancel) {
   if (!document.getElementById('dirtyWayToInjectConfirm')) {
     document.body.style.overflow = 'hidden';
     let el = document.createElement('div');
     el.setAttribute('id', 'dirtyWayToInjectConfirm');
     ReactDOM.render(
-      <ConfirmComponent message={message} success={success} cancel={cancel} />,
+      <ConfirmComponent message={message} success={success} cancel={cancel}/>,
       document.body.appendChild(el)
     );
   }

@@ -38,6 +38,7 @@ class AdminCreatePostScene extends React.Component {
     super(props);
     this.flatpickerInstance = '';
     this.vzoomInstance = '';
+    this.swiperSlideInstance = '';
     //https://stackoverflow.com/questions/53848026/how-to-use-pure-flatpickr-in-react
     this.publish_date = React.createRef();
     
@@ -54,6 +55,8 @@ class AdminCreatePostScene extends React.Component {
       price: '',
       currency: 'vnd',
       sale: '',
+      feature_image: {},
+      thumbnails: [],
       
       
       //========= initialize variable
@@ -107,27 +110,75 @@ class AdminCreatePostScene extends React.Component {
                          defaultValue={this.state.slug}/>
                 </div>
                 
+                {/* Slick slide */}
+                <div>
+                  <button className="btn btn-primary mb-3"
+                          data-purpose="thumbnails"
+                          onClick={this.openMediaModal}>Thêm ảnh chi tiết
+                  </button>
+                  
+                  <div id="thumbnails" className="mb-3">
+                    
+                    {
+                      this.state.thumbnails.length ?
+                        <div className="swiper-container thumbnails">
+                          <div className="swiper-wrapper">
+                            
+                            {
+                              this.state.thumbnails.map((el, key) => {
+                                return (
+                                  <div className="swiper-slide" key={key}>
+                                    <img className="swiper-lazy"
+                                         src={`${process.env.remoteServer}/${el.path}`}
+                                         alt={el.alt_text ? el.alt_text : ''}
+                                         title={el.title ? el.title : ''}
+                                         data-src={`${process.env.remoteServer}/${el.path}`}
+                                         data-small={`${process.env.remoteServer}/${el.path}`}
+                                         data-medium={`${process.env.remoteServer}/${el.path}`}
+                                         data-large={`${process.env.remoteServer}/${el.path}`}
+                                         data-retina={`${process.env.remoteServer}/${el.path}`}/>
+                                    {/*Preloader image */}
+                                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                                  </div>
+                                );
+                              })
+                            }
+                          
+                          </div>
+                        </div> : false
+                    }
+                  </div>
+                </div>
+                
+                
                 {/**/}
                 <div className='form-group'>
                   <label htmlFor='slug'>Mô tả sản phẩm</label>
                   <br/>
-                  <button type='button' id='show-media' className='btn btn-primary mb-2' onClick={this.openMediaModal}>
+                  <button type='button' id='show-media' className='btn btn-primary mb-2'
+                          data-purpose="main-product-content"
+                          onClick={this.openMediaModal}>
                     <i className='fas fa-images mr-2'></i>
                     Media
                   </button>
                   <textarea id='main-product-content' name='main_product_content'
-                            defaultValue={this.state.main_product_content}></textarea>
+                            value={this.state.main_product_content}
+                            onChange={this.handleChange}></textarea>
                 </div>
                 
                 {/**/}
                 <div className='form-group'>
                   <label htmlFor='slug'>Chi tiết sản phẩm</label>
                   <br/>
-                  <button id='show-media' className='btn btn-primary mb-2'><i className='fas fa-images mr-2'></i>
+                  <button id='show-media' className='btn btn-primary mb-2'
+                          data-purpose="product-detail"
+                          onClick={this.openMediaModal}>
+                    <i className='fas fa-images mr-2'></i>
                     Media
                   </button>
                   <textarea id='product-detail' name='product_detail'
-                            defaultValue={this.state.product_detail}></textarea>
+                            value={this.state.product_detail}
+                            onChange={this.handleChange}></textarea>
                 </div>
                 
                 {/**/}
@@ -360,15 +411,22 @@ class AdminCreatePostScene extends React.Component {
                 {/*panel body*/}
                 <div className='panel-body'>
                   <img className='w-100 vzoom'
-                       src='/static/img/default_admin_avatar.jpg'
+                       src={ !_.isEmpty(this.state.feature_image) ? `${process.env.remoteServer}/${this.state.feature_image.path}`: ''}
                        alt=''/>
+                  <input id="feature_image" name="feature_image" type="hidden" defaultValue={this.state.feature_image}/>
                 </div>
                 {/*panel footer*/}
                 <div className='hljs-wrapper'>
-                  <div className='hljs clearfix'>
-                    <p className='text-light-blue cursor-pointer mb-0 inline'>
+                  <div className='hljs clearfix d-flex justify-content-around'>
+                    <p className='text-light-blue cursor-pointer mb-0 inline'
+                       data-purpose="feature-image"
+                       onClick={this.openMediaModal}>
                       <i className='fa fa-plus mr-2'></i>
                       Set feature image
+                    </p>
+                    <p className='text-danger cursor-pointer mb-0 inline' onClick={this.removeFeatureImage}>
+                      <i className='fa fa-minus mr-2'></i>
+                      Remove feature image
                     </p>
                   </div>
                 </div>
@@ -380,7 +438,7 @@ class AdminCreatePostScene extends React.Component {
         </div>
         
         {/*Modal*/}
-        <div id="media-modal" className="modal" tabIndex="-1" role="dialog"
+        <div id="media-modal" className="modal fade" tabIndex="-1" role="dialog"
              aria-labelledby="media-modal" aria-hidden="true">
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
@@ -389,11 +447,14 @@ class AdminCreatePostScene extends React.Component {
           </div>
         </div>
         
+        {/* style */}
+        <style jsx>{style}</style>
       </div>
     );
   }
   
   componentDidMount() {
+    
     /**
      * Event handle for four button onto panel-header
      */
@@ -535,12 +596,20 @@ class AdminCreatePostScene extends React.Component {
     });
   };
   
+  /**
+   * Change product name and auto generate slug
+   * @param e
+   */
   handleChangeName = (e) => {
     let name = e.currentTarget.value;
     let slug = toSlug(name);
     this.setState({name, slug});
   };
   
+  /**
+   * Change product Price
+   * @param e
+   */
   handleChangePrice = (e) => {
     let value = e.currentTarget.value;
     if (isNumberDot(value) || value === '') {
@@ -550,6 +619,10 @@ class AdminCreatePostScene extends React.Component {
     }
   };
   
+  /**
+   * Change product Sale
+   * @param e
+   */
   handleChangeSale = (e) => {
     let value = e.currentTarget.value;
     if (isNumberDot(value) || value === '') {
@@ -560,7 +633,7 @@ class AdminCreatePostScene extends React.Component {
   };
   
   /**
-   *
+   * Change product publish date
    * @param selectedDates - Default params of Flatpickr type Date object
    * @param dateStr - Default params of Flatpickr type string
    * @param instance - Default params of Flatpickr
@@ -595,7 +668,7 @@ class AdminCreatePostScene extends React.Component {
   };
   
   /**
-   *
+   * Quick create product category
    * @returns {Promise<void>}
    */
   createNewCategory = async () => {
@@ -632,23 +705,150 @@ class AdminCreatePostScene extends React.Component {
     
   };
   
-  openMediaModal = () => {
+  /**
+   * Show media Modal and pass a callback to Media component which will be fire when insert.
+   * @param e
+   */
+  openMediaModal = (e) => {
+    let MediaComp;
+    if (e.currentTarget.dataset.purpose === 'feature-image') {
+      MediaComp = <MediaComponent insertFunc={this.setFeatureImage}/>;
+    } else if (e.currentTarget.dataset.purpose === 'main-product-content') {
+      MediaComp = <MediaComponent insertFunc={this.setMainProductContentImage}/>;
+    } else if (e.currentTarget.dataset.purpose === 'product-detail') {
+      MediaComp = <MediaComponent insertFunc={this.setMainProductDetailContentImage}/>;
+    } else if (e.currentTarget.dataset.purpose === 'thumbnails') {
+      MediaComp = <MediaComponent insertFunc={this.setThumbnails} fileIsSelected={this.state.thumbnails}/>;
+    }
+    
     this.setState({
-      mediaModalContent: <MediaComponent/>
+      mediaModalContent: MediaComp
     }, () => {
-      $('#media-modal').modal('handleUpdate');
-      $('#media-modal').modal('show');
-      
-      $('#media-modal').on('hidden.bs.modal', (e) => {
+      let mediaModal = $('#media-modal');
+      mediaModal.modal('handleUpdate');
+      mediaModal.modal('show');
+      mediaModal.on('hidden.bs.modal', (e) => {
         this.setState({
           mediaModalContent: ''
         });
-        
       });
     });
     
   };
   
+  /**
+   * It will be invoked from another place (In Media Component)
+   * @param data
+   */
+  setThumbnails = (data) => {
+    // Remove if not is image
+    _.remove(data, function(o) {
+      if(o.file_type === 'mp4') {
+        AlertComponentEvolution.show('Nhúng video vào bài viết bằng cách khác nhé.');
+        return true;
+      } else {
+        return false;
+      }
+    });
+    
+    this.setState({
+      thumbnails: data
+    }, () => {
+      this.swiperSlideInstance = new Swiper('.swiper-container.thumbnails', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        lazy: true,
+      });
+      
+      $('#media-modal').modal('hide');
+    });
+  };
+  
+  /**
+   * It will be invoked from another place (In Media Component)
+   * @param data
+   */
+  setFeatureImage = (data) => {
+    if(data.length > 1) {
+      AlertComponentEvolution.show('Chỉ có thể chọn một ảnh đại diện.');
+    } else {
+      
+      if(data[0].file_type === 'mp4') {
+        AlertComponentEvolution.show('Chọn ảnh thay vì chọn Video.');
+      } else {
+        this.setState({
+          feature_image: data[0]
+        }, () => {
+          $('#media-modal').modal('hide');
+        });
+      }
+      
+    }
+  };
+  
+  /**
+   *
+   */
+  removeFeatureImage = () => {
+    this.setState({
+      feature_image: ''
+    });
+  };
+  
+  /**
+   * It will be invoked from another place (In Media Component)
+   * @param data
+   */
+  setMainProductContentImage = (data) => {
+    data.forEach((item) => {
+      // let width = item.dimensions_width / 2
+      // let height = item.dimensions_height / 2
+      // CKEDITOR.instances['main-product-content'].insertHtml(`<img width="${width}" height="${height}" src="${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      if (item.file_type === 'mp4') {
+        // let createHtmlVideo = `<video controls>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/mp4"/>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/ogg"/>
+        //     Your browser does not support the video tag.
+        //   </video>`;
+        // Custom embed video by select elemebt of ckeditor and insert manual. You can't insert using insertHtml.
+        AlertComponentEvolution.show('Nhúng video vào bài viết bằng cách khác nhé.');
+      } else {
+        // You need set width height so that Ckeditor can changed image size
+        CKEDITOR.instances['main-product-content'].insertHtml(`<img width="${item.dimensions_width}" height="${item.dimensions_height}" src="${process.env.remoteServer}/${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      }
+      
+    });
+    $('#media-modal').modal('hide');
+  };
+  
+  /**
+   * It will be invoked from another place (In Media Component)
+   * @param data
+   */
+  setMainProductDetailContentImage = (data) => {
+    data.forEach((item) => {
+      // let width = item.dimensions_width / 2
+      // let height = item.dimensions_height / 2
+      // CKEDITOR.instances['main-product-content'].insertHtml(`<img width="${width}" height="${height}" src="${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      if (item.file_type === 'mp4') {
+        // let createHtmlVideo = `<video controls>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/mp4"/>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/ogg"/>
+        //     Your browser does not support the video tag.
+        //   </video>`;
+        // Custom embed video by select elemebt of ckeditor and insert manual. You can't insert using insertHtml.
+        AlertComponentEvolution.show('Nhúng video vào bài viết bằng cách khác nhé.');
+      } else {
+        CKEDITOR.instances['product-detail'].insertHtml(`<img width="${item.dimensions_width}" height="${item.dimensions_height}" src="${process.env.remoteServer}/${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      }
+      
+    });
+    $('#media-modal').modal('hide');
+  };
+  
+  /**
+   *
+   */
   createNewPost = () => {
     let data = {
       name: this.state.name,
@@ -661,7 +861,9 @@ class AdminCreatePostScene extends React.Component {
       sale: this.state.sale,
       publish_date: this.state.publish_date,
       categories: this.state.categoriesSelectedOfPost,
-      tags: this.state.tagsSelectedOfPost
+      tags: this.state.tagsSelectedOfPost,
+      feature_image: this.state.feature_image,
+      thumbnails: this.state.thumbnails,
     };
     console.log(data);
   };
@@ -672,6 +874,10 @@ class AdminCreatePostScene extends React.Component {
     CKEDITOR.instances['product-detail'].destroy();
     this.flatpickerInstance.destroy();
     $('#tags, #parent-category').select2('destroy');
+    $('#media-modal').modal('dispose');
+    if (this.swiperSlideInstance) {
+      this.swiperSlideInstance.destroy(true, true);
+    }
   }
   
 }

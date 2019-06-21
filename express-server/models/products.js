@@ -14,6 +14,22 @@ const productsSchema = new mongoose.Schema({
     lowercase: true,
     trim: true
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users',
+    required: [true, 'Author is required.']
+  },
+  feature_image: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Media',
+    required: [true, 'Feature image is required.']
+  },
+  thumbnails: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Media'
+    }
+  ],
   publish_date: {
     type: Date,
     default: Date.now()

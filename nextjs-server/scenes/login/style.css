@@ -1,5 +1,9 @@
 #wrapped-login {
   background-color: #171c21;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,10 +33,31 @@ input[type="text"], input[type="password"], input[type="email"] {
   padding: 20px 0;
   background: transparent !important;
   border: 0;
-  border-bottom: 1px solid #435160;
+  /*border-bottom: 1px solid #435160;*/
+  border-bottom: 1px solid #ffffff;
   outline: none;
-  color: #6D7781;
+  /*color: #6D7781;*/
+  color: #ffffff;
   font-size: 16px;
+  
+  animation: typewriter 1s steps(44) 1s 1 normal both,
+  blinkTextCursor 500ms steps(44) infinite normal;
+}
+
+/* Animation */
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 350px;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
+}
+
+::-webkit-input-placeholder {
+  /*color: #435160;*/
+  color: #ffffff;
+  font-size: 12px;
 }
 
 .social {
@@ -42,7 +67,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 .social:after {
   content: 'OR';
   font-size: 17px;
-  color: #435160;
+  color: #7a848e;
   position: absolute;
   top: 20px;
   font-family: 'Sofia', cursive;
@@ -54,21 +79,32 @@ input[type="text"], input[type="password"], input[type="email"] {
   margin: 0 5px;
 }
 
-.social .facebook {
-  color: #e4e2b8;
+.social span i {
+  color: #a8abae;
+  text-shadow: 3px -2px 1px rgba(107, 111, 75, 0.89);
+  transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
 }
 
-.social .twitter {
-  color: #e4e2b8;
+.social span i:hover {
+  color: #C8D4DD;
+  text-shadow: 10px 10px 10px rgba(223, 218, 218, 0.7);
 }
 
-.social .google-plus {
-  color: #e4e2b8;
-}
+/*.social .facebook {*/
+  /*color: #e4e2b8;*/
+/*}*/
 
-.social .youtube {
-  color: #e4e2b8;
-}
+/*.social .twitter {*/
+  /*color: #e4e2b8;*/
+/*}*/
+
+/*.social .google-plus {*/
+  /*color: #e4e2b8;*/
+/*}*/
+
+/*.social .youtube {*/
+  /*color: #e4e2b8;*/
+/*}*/
 
 .forgot {
   margin-top: 30px;
@@ -76,6 +112,7 @@ input[type="text"], input[type="password"], input[type="email"] {
   font-size: 11px;
   text-align: center;
   font-weight: bold;
+  color: #a8abae;
 }
 
 .forgot:hover {
@@ -84,16 +121,13 @@ input[type="text"], input[type="password"], input[type="email"] {
   font-size: 11px;
   text-align: center;
   font-weight: bold;
-  color: #6D7781;
-}
-
-::-webkit-input-placeholder {
-  color: #435160;
-  font-size: 12px;
+  color: #C8D4DD;
 }
 
 input[type="submit"] {
-  background: #3A5059;
+  /*background: #3A5059;*/
+  background: transparent;
+  opacity: 0.5;
   border: 0;
   width: 350px;
   height: 40px;

@@ -63,6 +63,32 @@ class LeftSidebarComponent extends React.Component {
                 </a>
               </Link>
             </li>
+  
+            <li
+              onClick={this.handleDropdown}
+              className={`has-sub ${pathname === '/admin/create-product' || pathname === '/admin/products' ? 'active' : ''}`}>
+              <a href="javascript:void(0);">
+                <b className="caret"></b>
+                <i className="fas fa-seedling"></i>
+                <span>Products</span>
+              </a>
+    
+              <ul className="sub-menu">
+                <li className={pathname === '/admin/products' ? 'active' : ''}>
+                  <Link prefetch href='/admin/products'>
+                    <a>All Products</a>
+                  </Link>
+                </li>
+      
+                <li className={pathname === '/admin/create-product' ? 'active' : ''}>
+                  <Link prefetch href='/admin/create-product'>
+                    <a>Add New <i className="fa fa-paper-plane text-theme"></i></a>
+                  </Link>
+                </li>
+    
+              </ul>
+  
+            </li>
             
             <li
               onClick={this.handleDropdown}

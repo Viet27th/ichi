@@ -1,19 +1,25 @@
 /* upload tab css*/
-#form-upload-images{
+#form-upload-images {
   position: relative;
   width: 100%;
   height: 200px;
-  border: 4px dashed rgba(0,0,0,.5);
+  border: 4px dashed rgba(0, 0, 0, .5);
 }
-#form-upload-images p{
-  position: relative;
+
+#form-upload-images p {
+  position: absolute;
   top: 27px;
+  height: 85px;
+  left: 0;
+  right: 0;
+  overflow: scroll;
   text-align: center;
-  color: rgba(0,0,0,.27);
+  color: rgba(0, 0, 0, .27);
   font-family: Arial;
   font-weight: bold;
 }
-#form-upload-images input{
+
+#form-upload-images input {
   position: absolute;
   margin: 0;
   padding: 0;
@@ -23,7 +29,8 @@
   opacity: 0;
   z-index: 2;
 }
-#form-upload-images .wrapper-upload-button{
+
+#form-upload-images .wrapper-upload-button {
   position: absolute;
   left: 0;
   right: 0;
@@ -34,7 +41,7 @@
 
 /* media tab css */
 #show-files, #file-details {
-  max-height: 60vh;
+  max-height: 65vh;
   overflow-y: scroll;
 }
 
@@ -42,7 +49,7 @@
   height: 115px;
 }
 
-#show-files .file img {
+#show-files .file img, #show-files .file video {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -61,5 +68,23 @@
   color: #217cd5;
   right: 6px;
   font-size: 27px;
+}
+
+#file-details #file-explore video {
+  width: 100%;
+}
+
+/* Crop image scene */
+#crop-image-scene {
+  height: 65vh;
+  overflow-y: scroll;
+  background-color: white;
+  border-top: 15px solid #fff;
+  border-bottom: 15px solid #fff;
+  border-radius: 5px;
+}
+
+#wrap-image-cropping img {
+  max-width: 100%;
 }
 

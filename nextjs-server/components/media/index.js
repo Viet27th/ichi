@@ -72,8 +72,10 @@ export class MediaComponent extends React.Component {
                                   <source src={`${process.env.remoteServer}/${file.path}`} type="video/ogg"/>
                                   Your browser does not support the video tag.
                                 </video> :
-                                <img src={`${process.env.remoteServer}/${file.path}?timestamp=${new Date(file.updatedAt).getTime()}`} alt={file.alt_text}
-                                     title={file.title}/>
+                                <img
+                                  src={`${process.env.remoteServer}/${file.path}?timestamp=${new Date(file.updatedAt).getTime()}`}
+                                  alt={file.alt_text}
+                                  title={file.title}/>
                             }
                           
                           </div>
@@ -110,9 +112,10 @@ export class MediaComponent extends React.Component {
                                         type="video/ogg"/>
                                 Your browser does not support the video tag.
                               </video> :
-                              <img src={`${process.env.remoteServer}/${this.state.fileSelected.path}?timestamp=${new Date(this.state.fileSelected.updatedAt).getTime()}`}
-                                   alt={this.state.fileSelected.alt_text}
-                                   title={this.state.fileSelected.title} className="img-thumbnail"/>
+                              <img
+                                src={`${process.env.remoteServer}/${this.state.fileSelected.path}?timestamp=${new Date(this.state.fileSelected.updatedAt).getTime()}`}
+                                alt={this.state.fileSelected.alt_text}
+                                title={this.state.fileSelected.title} className="img-thumbnail"/>
                           }
                         </div>
                         <ul className="pl-0 pt-2 list-unstyled">
@@ -780,13 +783,13 @@ export class MediaComponent extends React.Component {
               let index = _.findIndex(cloneFileList, {_id: result.data.data._id});
               // Replace item at index using native splice
               cloneFileList.splice(index, 1, result.data.data);
+              this.arrFileIsSelected = [result.data.data];
               this.setState({
                 cropImageIsShow: false,
                 fileSelected: result.data.data,
                 fileList: cloneFileList
               }, () => {
                 this.cropperInstance.destroy();
-                this.arrFileIsSelected = [result.data.data];
               });
             } else {
               AlertComponentEvolution.show(result.data.message);

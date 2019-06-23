@@ -8,5 +8,6 @@ router.post('/upload-media', middleware.checkUserAuthenticate ,mediaControllers.
 router.get('/get-all-media', mediaControllers.getAllMedia);
 router.put('/update/:id', mediaControllers.updateMediaById);
 router.delete('/delete/:id', mediaControllers.deleteMediaById);
+router.put('/crop-image', mediaControllers.handleCropImage);
 
 module.exports = router;

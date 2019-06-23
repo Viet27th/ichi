@@ -4,6 +4,9 @@
 /express-server/node_modules
 /nextjs-server/node_modules
 
+# static image folder
+/express-server/public/store
+
 # production
 /nextjs-server/.next
 

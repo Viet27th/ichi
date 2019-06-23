@@ -233,3 +233,31 @@ exports.deleteMediaById = async (req, res) => {
     });
   }
 };
+
+exports.handleCropImage = async (req, res) => {
+  let fileCropped = req.files.croppedImage;
+
+  try {
+    let oldImage = await Media.findById(req.body.imgId).exec();
+    let dimensions = sizeOf(fileCropped.data);
+    oldImage.size = fileCropped.size; //Bytes
+    oldImage.md5 = fileCropped.md5;  // Using to checksum of a file
+    oldImage.dimensions_width = dimensions.width;
+    oldImage.dimensions_height = dimensions.height;
+    let folderStore = path.join(__dirname + '/..' + '/public');
+    fs.writeFileSync(`${folderStore}/${oldImage.path}`, fileCropped.data);
+    let image = await oldImage.save();
+    res.json({
+      requestSuccessfully: true,
+      message: 'Image cropped is successful.',
+      data: image
+    });
+    
+  } catch (e) {
+    res.json({
+      requestSuccessfully: false,
+      message: e.message
+    });
+  }
+ 
+};

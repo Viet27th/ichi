@@ -8,7 +8,6 @@ import {axiosInstance} from '../../services/axios.service';
 import {express_api} from '../../services/express_api.service';
 import {SpinnerComponentEvolution} from '../spinner';
 import {ConfirmComponentEvolution} from '../confirm';
-import {toSlug, isNumber, isNumberDot} from '../../services/regex.service';
 
 export class MediaComponent extends React.Component {
   constructor(props) {
@@ -73,7 +72,7 @@ export class MediaComponent extends React.Component {
                                   <source src={`${process.env.remoteServer}/${file.path}`} type="video/ogg"/>
                                   Your browser does not support the video tag.
                                 </video> :
-                                <img src={`${process.env.remoteServer}/${file.path}`} alt={file.alt_text}
+                                <img src={`${process.env.remoteServer}/${file.path}?timestamp=${new Date(file.updatedAt).getTime()}`} alt={file.alt_text}
                                      title={file.title}/>
                             }
                           
@@ -111,7 +110,7 @@ export class MediaComponent extends React.Component {
                                         type="video/ogg"/>
                                 Your browser does not support the video tag.
                               </video> :
-                              <img src={`${process.env.remoteServer}/${this.state.fileSelected.path}`}
+                              <img src={`${process.env.remoteServer}/${this.state.fileSelected.path}?timestamp=${new Date(this.state.fileSelected.updatedAt).getTime()}`}
                                    alt={this.state.fileSelected.alt_text}
                                    title={this.state.fileSelected.title} className="img-thumbnail"/>
                           }
@@ -674,7 +673,7 @@ export class MediaComponent extends React.Component {
       let cropperOption = {
         aspectRatio: 16 / 9,
         // checkCrossOrigin: false, // Fix CORS if current image is a cross-origin image
-        autoCrop: true,  // Remove auto show crop view when initialize
+        autoCrop: true,  // Enable auto show crop view when initialize
         preview: '.img-preview',
         crop(event) {
           // Trigger when you click, hold and drag mouse
@@ -746,7 +745,7 @@ export class MediaComponent extends React.Component {
       /**
        * Handle khi ấn save image đã cắt.
        */
-      document.getElementById('save-image-cropped-btn').addEventListener('click', () => {
+      document.getElementById('save-image-cropped-btn').addEventListener('click', async () => {
         let data = this.cropperInstance.getCroppedCanvas({
           maxWidth: 4096,
           maxHeight: 4096,
@@ -755,9 +754,54 @@ export class MediaComponent extends React.Component {
           imageSmoothingQuality: 'high',
         });
         
-        window.open(data.toDataURL('image/png', 1), '_blank');
+        let convertImgToBlob = new Promise((resolve, reject) => {
+          data.toBlob((blob) => {
+            resolve(blob);
+          }, `image/${this.state.fileSelected.file_type}`, 1);
+        });
+        
+        try {
+          let imageBlob = await convertImgToBlob;
+          let formData = new FormData();
+          formData.append('croppedImage', imageBlob);
+          formData.append('imgId', this.state.fileSelected._id);
+          SpinnerComponentEvolution.show();
+          axiosInstance().put(express_api.cropImageUrl, formData, {
+            needLogin: true,
+            headers: {
+              'Content-Type': 'multipart/form-data'  // Indicated that what type of data is sent to server
+            }
+          }).then(result => {
+            SpinnerComponentEvolution.hide();
+            if (result.data.requestSuccessfully) {
+              AlertComponentEvolution.show(result.data.message);
+              let cloneFileList = _.map(this.state.fileList, _.clone);
+              // Find item index using _.findIndex
+              let index = _.findIndex(cloneFileList, {_id: result.data.data._id});
+              // Replace item at index using native splice
+              cloneFileList.splice(index, 1, result.data.data);
+              this.setState({
+                cropImageIsShow: false,
+                fileSelected: result.data.data,
+                fileList: cloneFileList
+              }, () => {
+                this.cropperInstance.destroy();
+                this.arrFileIsSelected = [result.data.data];
+              });
+            } else {
+              AlertComponentEvolution.show(result.data.message);
+            }
+          }).catch(e => {
+            SpinnerComponentEvolution.hide();
+            AlertComponentEvolution.show(e.message);
+          });
+          
+        } catch (e) {
+          AlertComponentEvolution.show(e.message);
+        }
         
       });
+      
       document.getElementById('preview-image-cropped-btn').addEventListener('click', () => {
         let data = this.cropperInstance.getCroppedCanvas({
           maxWidth: 4096,
@@ -767,7 +811,7 @@ export class MediaComponent extends React.Component {
           imageSmoothingQuality: 'high',
         });
         
-        window.open(data.toDataURL('image/png', 1), '_blank');
+        window.open(data.toDataURL(`image/${this.state.fileSelected.file_type}`, 1), '_blank');
       });
       // ========= End above =========
       
@@ -808,7 +852,7 @@ export class MediaComponent extends React.Component {
       
       document.getElementById('scale-btn').addEventListener('click', () => {
         let {naturalWidth} = this.cropperInstance.getImageData();
-        if(scaleWidthEl.value) {
+        if (scaleWidthEl.value) {
           this.cropperInstance.scale(scaleWidthEl.value / naturalWidth); // scale to set image dimensions
           this.cropperInstance.setData({
             // Set Data that mean set which will crop.

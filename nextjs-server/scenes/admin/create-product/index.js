@@ -129,14 +129,14 @@ class AdminCreateProductScene extends React.Component {
                                 return (
                                   <div className="swiper-slide" key={key}>
                                     <img className="swiper-lazy"
-                                         src={`${process.env.remoteServer}/${el.path}`}
+                                         src={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
                                          alt={el.alt_text ? el.alt_text : ''}
                                          title={el.title ? el.title : ''}
-                                         data-src={`${process.env.remoteServer}/${el.path}`}
-                                         data-small={`${process.env.remoteServer}/${el.path}`}
-                                         data-medium={`${process.env.remoteServer}/${el.path}`}
-                                         data-large={`${process.env.remoteServer}/${el.path}`}
-                                         data-retina={`${process.env.remoteServer}/${el.path}`}/>
+                                         data-src={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                         data-small={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                         data-medium={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                         data-large={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                         data-retina={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}/>
                                     {/*Preloader image */}
                                     <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                                   </div>
@@ -411,7 +411,7 @@ class AdminCreateProductScene extends React.Component {
                 {/*panel body*/}
                 <div className='panel-body'>
                   <img className='w-100 vzoom'
-                       src={!_.isEmpty(this.state.feature_image) ? `${process.env.remoteServer}/${this.state.feature_image.path}` : ''}
+                       src={!_.isEmpty(this.state.feature_image) ? `${process.env.remoteServer}/${this.state.feature_image.path}?timestamp=${new Date(this.state.feature_image.updatedAt).getTime()}` : ''}
                        alt=''/>
                   <input id="feature_image" name="feature_image" type="hidden" defaultValue={this.state.feature_image}/>
                 </div>

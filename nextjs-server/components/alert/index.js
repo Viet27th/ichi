@@ -16,8 +16,8 @@ class AlertComponent extends React.Component {
             <div className="vp-diag-header">
               <span id="vp-diag-close" onClick={hide}><i className="fa fa-times" aria-hidden="true"></i></span>
             </div>
-            <div className="vp-diag-body mb-3 text-center">
-              {this.message}
+            <div className="vp-diag-body mb-3 text-center" dangerouslySetInnerHTML={{ __html: this.message }}>
+              {/*Render HTML string as real HTML in a React component*/}
             </div>
             <div className="vp-diag-footer text-center">
               <button id="vp-diag-ok" type="button" className="btn btn-success">Ok</button>

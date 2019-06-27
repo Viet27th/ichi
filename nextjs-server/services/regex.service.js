@@ -16,8 +16,10 @@ export function regexEmail(email) {
 export function toSlug(str) {
   // Loại bỏ toàn bộ dấu space (nếu có) ở 2 đầu của xâu
   str = str.trim();
-  // Loại bỏ tất cả các kí tự không phải chữ cái và số và dấu -
-  str = str.replace(/[^0-9a-z-àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ\s]/gi, '');
+  
+  // str = str.replace(/[^0-9a-z-àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ\s]/gi, ''); // Loại bỏ tất cả các kí tự không phải chữ cái và số và dấu -
+  str = str.replace(/[^0-9a-z-àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ\s]/gi, '-'); // Thay tất cả các kí tự không phải chữ cái và số và dấu - thành dấu -
+  
   // Loại bỏ hoàn toàn dấu câu tiếng Việt, không phân biệt hoa thường.
   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
   str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');

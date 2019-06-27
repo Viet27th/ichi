@@ -19,6 +19,10 @@ const productsSchema = new mongoose.Schema({
     ref: 'Users',
     required: [true, 'Author is required.']
   },
+  last_edited_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  },
   feature_image: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Media',

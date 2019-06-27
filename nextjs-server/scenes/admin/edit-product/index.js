@@ -12,6 +12,7 @@ import {SpinnerComponentEvolution} from '../../../components/spinner';
 import {toSlug, isNumber, isNumberDot} from '../../../services/regex.service';
 import _ from 'lodash';
 import {MediaComponent} from '../../../components/media';
+import ErrorScene from '../../../scenes/_error';
 
 class AdminEditProductScene extends React.Component {
   static async getInitialProps(ctx) {
@@ -31,7 +32,21 @@ class AdminEditProductScene extends React.Component {
       }
     }
     
-    return {};
+    //
+    let result = await axiosInstance(ctx.req).get(`${express_api.getProductBySlugUrl}/${ctx.query.slug}`);
+    if (result.data.requestSuccessfully) {
+      return {
+        productInfo: result.data.data
+      };
+    } else {
+      if (ctx.res) {
+        ctx.res.writeHead(303, {Location: `/`});
+        ctx.res.end();
+      } else {
+        Router.push('/');
+      }
+    }
+    
   }
   
   constructor(props) {
@@ -42,46 +57,46 @@ class AdminEditProductScene extends React.Component {
     //https://stackoverflow.com/questions/53848026/how-to-use-pure-flatpickr-in-react
     this.publish_date = React.createRef();
     
+    //========= initialize variable
+    this.postStatus = [
+      {
+        value: 'new',
+        name: 'Bài viết mới'
+      },
+      {
+        value: 'draft',
+        name: 'Nháp'
+      },
+      {
+        value: 'trash',
+        name: 'Đã tạm xoá'
+      }
+    ];
+    
     this.state = {
       //========= set variable for this post
-      name: '',
-      slug: '',
-      main_product_content: '',
-      product_detail: '',
-      status: 'new',
-      publish_date: new Date().toISOString(),
-      categoriesSelectedOfPost: [], // Categories which you want to the Post belong to. It's array id of categories
-      tagsSelectedOfPost: [], // Tags which you want to the Post belong to. It's array include both id and slug.
-      price: '',
-      currency: 'vnd',
-      sale: '',
-      feature_image: '',
-      thumbnails: [],
+      name: props.productInfo.name,
+      slug: props.productInfo.slug,
+      main_product_content: props.productInfo.main_product_content,
+      product_detail: props.productInfo.product_detail,
+      status: props.productInfo.status,
+      publish_date: props.productInfo.publish_date,
+      categoriesSelectedOfPost: props.productInfo.belongToCategories.map(el => el._id), // Categories which you want to the Post belong to. It's array id of categories
+      tagsSelectedOfPost: props.productInfo.belongToTags.map(el => el._id), // Tags which you want to the Post belong to. It's array include both id and slug.
+      price: props.productInfo.price || '',
+      currency: props.productInfo.currency,
+      sale: props.productInfo.sale || '',
+      feature_image: props.productInfo.feature_image,
+      thumbnails: props.productInfo.thumbnails, // Array object
       
-      
-      //========= initialize variable
-      postStatus: [
-        {
-          value: 'new',
-          name: 'Bài viết mới'
-        },
-        {
-          value: 'draft',
-          name: 'Nháp'
-        },
-        {
-          value: 'trash',
-          name: 'Đã tạm xoá'
-        }
-      ],
+      // Contains all Taxonomy which is existing in DB
       categories: [],
       tags: [],
       //========= Fast create a new category
       parent_category_selected: '',
       category_name_creating: '',
-      //
+      // To handle dynamic content for Modal. Dedicate which one should i show.
       mediaModalContent: '',
-      
     };
     
   };
@@ -99,22 +114,22 @@ class AdminEditProductScene extends React.Component {
                 <div className='form-group'>
                   <label htmlFor='name'>Title</label>
                   <input type='text' name='name' className='form-control' id='name' placeholder='Required...'
-                         value={this.state.name}
-                         onChange={this.handleChangeName}/>
+                    value={this.state.name}
+                    onChange={this.handleChangeName}/>
                 </div>
                 
                 {/**/}
                 <div className='form-group'>
                   <label htmlFor='slug'>Slug</label>
                   <input type='text' name='slug' disabled className='form-control' id='slug' placeholder='Required...'
-                         defaultValue={this.state.slug}/>
+                    value={this.state.slug} onChange={void (9)}/>
                 </div>
                 
                 {/* Slick slide */}
                 <div>
                   <button className="btn btn-primary mb-3"
-                          data-purpose="thumbnails"
-                          onClick={this.openMediaModal}>Thêm ảnh chi tiết
+                    data-purpose="thumbnails"
+                    onClick={this.openMediaModal}>Thêm ảnh chi tiết
                   </button>
                   
                   <div id="thumbnails" className="mb-3">
@@ -129,15 +144,15 @@ class AdminEditProductScene extends React.Component {
                                 return (
                                   <div className="swiper-slide" key={key}>
                                     <img className="swiper-lazy"
-                                         src={el.path}
-                                         alt={el.alt_text ? el.alt_text : ''}
-                                         title={el.title ? el.title : ''}
-                                         data-src={el.path}
-                                         data-small={el.path}
-                                         data-medium={el.path}
-                                         data-large={el.path}
-                                         data-retina={el.path}/>
-                                     {/*Preloader image */}
+                                      src={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                      alt={el.alt_text ? el.alt_text : ''}
+                                      title={el.title ? el.title : ''}
+                                      data-src={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                      data-small={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                      data-medium={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                      data-large={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}
+                                      data-retina={`${process.env.remoteServer}/${el.path}?timestamp=${new Date(el.updatedAt).getTime()}`}/>
+                                    {/*Preloader image */}
                                     <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                                   </div>
                                 );
@@ -156,14 +171,14 @@ class AdminEditProductScene extends React.Component {
                   <label htmlFor='slug'>Mô tả sản phẩm</label>
                   <br/>
                   <button type='button' id='show-media' className='btn btn-primary mb-2'
-                          data-purpose="main-product-content"
-                          onClick={this.openMediaModal}>
+                    data-purpose="main-product-content"
+                    onClick={this.openMediaModal}>
                     <i className='fas fa-images mr-2'></i>
                     Media
                   </button>
                   <textarea id='main-product-content' name='main_product_content'
-                            value={this.state.main_product_content}
-                            onChange={this.handleChange}></textarea>
+                    value={this.state.main_product_content}
+                    onChange={this.handleChange}></textarea>
                 </div>
                 
                 {/**/}
@@ -171,14 +186,14 @@ class AdminEditProductScene extends React.Component {
                   <label htmlFor='slug'>Chi tiết sản phẩm</label>
                   <br/>
                   <button id='show-media' className='btn btn-primary mb-2'
-                          data-purpose="product-detail"
-                          onClick={this.openMediaModal}>
+                    data-purpose="product-detail"
+                    onClick={this.openMediaModal}>
                     <i className='fas fa-images mr-2'></i>
                     Media
                   </button>
                   <textarea id='product-detail' name='product_detail'
-                            value={this.state.product_detail}
-                            onChange={this.handleChange}></textarea>
+                    value={this.state.product_detail}
+                    onChange={this.handleChange}></textarea>
                 </div>
                 
                 {/**/}
@@ -186,15 +201,15 @@ class AdminEditProductScene extends React.Component {
                   <div className="form-group col-lg-4">
                     <label htmlFor="inputCity">Giá tiền</label>
                     <input type="text" className="form-control" id="price" name='price'
-                           value={this.state.price}
-                           onChange={this.handleChangePrice}/>
+                      value={this.state.price}
+                      onChange={this.handleChangePrice}/>
                   </div>
                   
                   <div className="form-group col-lg-3">
                     <label htmlFor="inputState">Đơn vị tiền tệ</label>
                     <select id="currency" name='currency' className="form-control custom-select cursor-pointer"
-                            value={this.state.currency}
-                            onChange={this.handleChange}>
+                      value={this.state.currency}
+                      onChange={this.handleChange}>
                       <option value='vnd'>Đồng</option>
                       <option value='usd'>USD</option>
                     </select>
@@ -204,8 +219,8 @@ class AdminEditProductScene extends React.Component {
                     <label htmlFor="sale">Sale</label>
                     <div className="input-group">
                       <input type="text" className="form-control" id="sale" name='sale' placeholder="Sale..."
-                             value={this.state.sale}
-                             onChange={this.handleChangeSale}/>
+                        value={this.state.sale}
+                        onChange={this.handleChangeSale}/>
                       <div className="input-group-prepend">
                         <span className="input-group-text">%</span>
                       </div>
@@ -224,13 +239,13 @@ class AdminEditProductScene extends React.Component {
               <div className='panel-heading'>
                 <div className='panel-heading-btn'>
                   <a href='javascript:void(0)' className='btn btn-xs btn-icon btn-circle btn-default'
-                     data-v-click='expand'><i className='fa fa-expand'></i></a>
+                    data-v-click='expand'><i className='fa fa-expand'></i></a>
                   <a href='javascript:void(0)' className='btn btn-xs btn-icon btn-circle btn-success'
-                     data-v-click='reload'><i className='fa fa-redo'></i></a>
+                    data-v-click='reload'><i className='fa fa-redo'></i></a>
                   <a href='javascript:void(0)' className='btn btn-xs btn-icon btn-circle btn-warning'
-                     data-v-click='collapse'><i className='fa fa-minus'></i></a>
+                    data-v-click='collapse'><i className='fa fa-minus'></i></a>
                   <a href='javascript:void(0)' className='btn btn-xs btn-icon btn-circle btn-danger'
-                     data-v-click='remove'><i className='fa fa-times'></i></a>
+                    data-v-click='remove'><i className='fa fa-times'></i></a>
                 </div>
                 <h4 className='panel-title'>Publish <span
                   className='label label-success m-l-5 t-minus-1'>NEW</span></h4>
@@ -239,15 +254,20 @@ class AdminEditProductScene extends React.Component {
               <div className='is-collapse'>
                 {/*panel body*/}
                 <div className='panel-body'>
+                  <p className='clearfix box-body__publish-date mb-0'>
+                    <i className='fa fa-calendar mr-2 pull-left t-plus-2'></i>
+                    <span className='pull-left'>Author:&nbsp;</span>
+                    <span className="ml-4">{this.props.productInfo.author.name}</span>
+                  </p>
                   <p>
                     <i className='fa fa-calendar mr-2 t-plus-1'></i>
                     Trạng thái:&nbsp;
                     <span className='text-bold text-muted'>
                       <select name="status" id="status" className='cursor-pointer form-control custom-select w-50'
-                              value={this.state.status}
-                              onChange={this.handleChange}>
+                        value={this.state.status}
+                        onChange={this.handleChange}>
                         {
-                          this.state.postStatus.map((el, index) => {
+                          this.postStatus.map((el, index) => {
                             return (
                               <option value={el.value} key={index}>{el.name}</option>
                             );
@@ -260,8 +280,8 @@ class AdminEditProductScene extends React.Component {
                     <i className='fa fa-calendar mr-2 pull-left t-plus-2'></i>
                     <span className='pull-left'>Ngày đăng:&nbsp;</span>
                     <input id='publish-date' name='publish_date' type='text'
-                           className='text-bold text-dark no-border pull-left'
-                           ref={this.publish_date}/>
+                      className='text-bold text-dark no-border pull-left'
+                      ref={this.publish_date}/>
                     <label htmlFor='publish-date' className='change font-weight-light cursor-pointer'>Change</label>
                   </p>
                 </div>
@@ -279,13 +299,13 @@ class AdminEditProductScene extends React.Component {
               <div className='panel-heading'>
                 <div className='panel-heading-btn'>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-default'
-                     data-v-click='expand'><i className='fa fa-expand'></i></a>
+                    data-v-click='expand'><i className='fa fa-expand'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-success'
-                     data-v-click='reload'><i className='fa fa-redo'></i></a>
+                    data-v-click='reload'><i className='fa fa-redo'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-warning'
-                     data-v-click='collapse'><i className='fa fa-minus'></i></a>
+                    data-v-click='collapse'><i className='fa fa-minus'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-danger'
-                     data-v-click='remove'><i className='fa fa-times'></i></a>
+                    data-v-click='remove'><i className='fa fa-times'></i></a>
                 </div>
                 <h4 className='panel-title'>Categories <span
                   className='label label-success m-l-5 t-minus-1'>NEW</span></h4>
@@ -301,8 +321,8 @@ class AdminEditProductScene extends React.Component {
                         <div className='checkbox' key={index}>
                           <label className='d-flex align-items-center' style={{'paddingLeft': `${27 * el.deep}px`}}>
                             <input type='checkbox' name='categories' value={el._id}
-                                   checked={_.includes(this.state.categoriesSelectedOfPost, el._id)}
-                                   onChange={this.handleChangeCategoriesProductBelongTo}/>
+                              defaultChecked={_.includes(this.state.categoriesSelectedOfPost, el._id)}
+                              onChange={this.handleChangeCategoriesProductBelongTo}/>
                             <span className='cr mr-2'><i className='cr-icon fa fa-check'></i></span>
                             {el.name}
                           </label>
@@ -316,16 +336,16 @@ class AdminEditProductScene extends React.Component {
                 <div className='hljs-wrapper'>
                   <div className='hljs clearfix'>
                     <p className='text-light-blue cursor-pointer inline mb-0' data-toggle='collapse'
-                       data-target='#new-category'>
+                      data-target='#new-category'>
                       <i className='fa fa-plus mr-2'></i>
                       Add new category
                     </p>
                     <div id='new-category' className='collapse'>
                       <div className='form-group mb-0 pt-3'>
                         <select id='parent-category' name='parent_category_selected' className='form-control'
-                                style={{'width': '100%'}} value={this.state.parent_category_selected}
-                                onChange={() => {
-                                }}>
+                          style={{'width': '100%'}} value={this.state.parent_category_selected}
+                          onChange={() => {
+                          }}>
                           <option value=''>---Select Parent Category---</option>
                           {
                             this.state.categories.map((el, index) => {
@@ -339,12 +359,12 @@ class AdminEditProductScene extends React.Component {
                       
                       <div className='input-group pt-3'>
                         <input name='category_name_creating' type='text' className='form-control'
-                               value={this.state.category_name_creating}
-                               onChange={this.handleChange}
-                               placeholder='Category...'/>
+                          value={this.state.category_name_creating}
+                          onChange={this.handleChange}
+                          placeholder='Category...'/>
                         <span className='input-group-btn'>
                           <button type='button' className='btn btn-info ml-2'
-                                  onClick={this.createNewCategory}>
+                            onClick={this.createNewCategory}>
                             Click me to Add New!
                           </button>
                         </span>
@@ -360,13 +380,13 @@ class AdminEditProductScene extends React.Component {
               <div className='panel-heading'>
                 <div className='panel-heading-btn'>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-default'
-                     data-v-click='expand'><i className='fa fa-expand'></i></a>
+                    data-v-click='expand'><i className='fa fa-expand'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-success'
-                     data-v-click='reload'><i className='fa fa-redo'></i></a>
+                    data-v-click='reload'><i className='fa fa-redo'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-warning'
-                     data-v-click='collapse'><i className='fa fa-minus'></i></a>
+                    data-v-click='collapse'><i className='fa fa-minus'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-danger'
-                     data-v-click='remove'><i className='fa fa-times'></i></a>
+                    data-v-click='remove'><i className='fa fa-times'></i></a>
                 </div>
                 <h4 className='panel-title'>Tags <span
                   className='label label-success m-l-5 t-minus-1'>NEW</span></h4>
@@ -377,7 +397,8 @@ class AdminEditProductScene extends React.Component {
                 <div className='panel-body'>
                   <div className='form-group mb-0'>
                     <select id='tags' name='tags[]' className='form-control' multiple='multiple'
-                            data-placeholder='Select tags' style={{'width': '100%'}}>
+                      data-placeholder='Select tags' style={{'width': '100%'}}
+                      value={this.state.tagsSelectedOfPost} onChange={() => void (0)}>
                       {
                         this.state.tags.map((el, index) => {
                           return (
@@ -395,13 +416,13 @@ class AdminEditProductScene extends React.Component {
               <div className='panel-heading'>
                 <div className='panel-heading-btn'>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-default'
-                     data-v-click='expand'><i className='fa fa-expand'></i></a>
+                    data-v-click='expand'><i className='fa fa-expand'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-success'
-                     data-v-click='reload'><i className='fa fa-redo'></i></a>
+                    data-v-click='reload'><i className='fa fa-redo'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-warning'
-                     data-v-click='collapse'><i className='fa fa-minus'></i></a>
+                    data-v-click='collapse'><i className='fa fa-minus'></i></a>
                   <a href='javascript:;' className='btn btn-xs btn-icon btn-circle btn-danger'
-                     data-v-click='remove'><i className='fa fa-times'></i></a>
+                    data-v-click='remove'><i className='fa fa-times'></i></a>
                 </div>
                 <h4 className='panel-title'>Feature Image <span
                   className='label label-success m-l-5 t-minus-1'>NEW</span></h4>
@@ -411,16 +432,16 @@ class AdminEditProductScene extends React.Component {
                 {/*panel body*/}
                 <div className='panel-body'>
                   <img className='w-100 vzoom'
-                       src={this.state.feature_image}
-                       alt=''/>
+                    src={!_.isEmpty(this.state.feature_image) ? `${process.env.remoteServer}/${this.state.feature_image.path}?timestamp=${new Date(this.state.feature_image.updatedAt).getTime()}` : ''}
+                    alt=''/>
                   <input id="feature_image" name="feature_image" type="hidden" defaultValue={this.state.feature_image}/>
                 </div>
                 {/*panel footer*/}
                 <div className='hljs-wrapper'>
                   <div className='hljs clearfix d-flex justify-content-around'>
                     <p className='text-light-blue cursor-pointer mb-0 inline'
-                       data-purpose="feature-image"
-                       onClick={this.openMediaModal}>
+                      data-purpose="feature-image"
+                      onClick={this.openMediaModal}>
                       <i className='fa fa-plus mr-2'></i>
                       Set feature image
                     </p>
@@ -439,7 +460,7 @@ class AdminEditProductScene extends React.Component {
         
         {/*Modal*/}
         <div id="media-modal" className="modal fade" tabIndex="-1" role="dialog"
-             aria-labelledby="media-modal" aria-hidden="true">
+          aria-labelledby="media-modal" aria-hidden="true">
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
               {this.state.mediaModalContent}
@@ -454,6 +475,11 @@ class AdminEditProductScene extends React.Component {
   }
   
   componentDidMount() {
+    /**
+     * https://stackoverflow.com/questions/11453741/javascript-beforeunload-detect-refresh-versus-close
+     */
+    window.addEventListener('beforeunload', this.handleWindowClose);
+    
     /**
      * Event handle for four button onto panel-header
      */
@@ -479,6 +505,13 @@ class AdminEditProductScene extends React.Component {
       });
     }();
     
+    // Register Swiper slide
+    this.swiperSlideInstance = new Swiper('.swiper-container.thumbnails', {
+      slidesPerView: 4,
+      spaceBetween: 30,
+      lazy: true,
+    });
+    
     // Register VZoom
     this.vzoomInstance = VZoom.init('.vzoom', {
       backgroundColor: 'rgba(0,0,0,.95)',
@@ -498,6 +531,7 @@ class AdminEditProductScene extends React.Component {
       youtube_responsive: true,
       youtube_controls: true,
       youtube_related: true,
+      allowedContent: true, // Allow set attribute (i.e: class) for element when using insertHtml of Ckeditor
     };
     
     CKEDITOR.replace('main-product-content', ckeditorOption);
@@ -512,6 +546,7 @@ class AdminEditProductScene extends React.Component {
         main_product_content: this.getData()
       });
     });
+    
     CKEDITOR.instances['product-detail'].on('change', function (e) {
       self.setState({
         product_detail: this.getData()
@@ -543,6 +578,17 @@ class AdminEditProductScene extends React.Component {
     // Get first list tag
     this.getListTag();
   }
+  
+  /**
+   * https://github.com/zeit/next.js/issues/2236
+   * Confirm before navigate
+   * @param e
+   * @returns {string}
+   */
+  handleWindowClose = (e) => {
+    let message = 'You have unsaved changes - are you sure you wish to close?';
+    return e.returnValue = message;
+  };
   
   /**
    * Get category list from DB
@@ -600,9 +646,12 @@ class AdminEditProductScene extends React.Component {
    * @param e
    */
   handleChangeName = (e) => {
-    let name = e.currentTarget.value;
-    let slug = toSlug(name);
-    this.setState({name, slug});
+    let nameValue = e.currentTarget.value;
+    let slug = toSlug(nameValue);
+    this.setState({
+      name: nameValue,
+      slug
+    });
   };
   
   /**
@@ -711,13 +760,14 @@ class AdminEditProductScene extends React.Component {
   openMediaModal = (e) => {
     let MediaComp;
     if (e.currentTarget.dataset.purpose === 'feature-image') {
-      MediaComp = <MediaComponent insertFunc={this.setFeatureImage}/>;
+      MediaComp = <MediaComponent insertFunc={this.setFeatureImage} insertBtnIsShow={true}/>;
     } else if (e.currentTarget.dataset.purpose === 'main-product-content') {
-      MediaComp = <MediaComponent insertFunc={this.setMainProductContentImage}/>;
+      MediaComp = <MediaComponent insertFunc={this.setMainProductContentImage} insertBtnIsShow={true}/>;
     } else if (e.currentTarget.dataset.purpose === 'product-detail') {
-      MediaComp = <MediaComponent insertFunc={this.setMainProductDetailContentImage}/>;
+      MediaComp = <MediaComponent insertFunc={this.setMainProductDetailContentImage} insertBtnIsShow={true}/>;
     } else if (e.currentTarget.dataset.purpose === 'thumbnails') {
-      MediaComp = <MediaComponent insertFunc={this.setThumbnails} fileIsSelected={this.state.thumbnails}/>;
+      MediaComp =
+        <MediaComponent insertFunc={this.setThumbnails} fileIsSelected={this.state.thumbnails} insertBtnIsShow={true}/>;
     }
     
     this.setState({
@@ -740,6 +790,16 @@ class AdminEditProductScene extends React.Component {
    * @param data
    */
   setThumbnails = (data) => {
+    // Remove if not is image
+    _.remove(data, function (o) {
+      if (o.file_type === 'mp4') {
+        AlertComponentEvolution.show('Nhúng video vào bài viết bằng cách khác nhé.');
+        return true;
+      } else {
+        return false;
+      }
+    });
+    
     this.setState({
       thumbnails: data
     }, () => {
@@ -758,11 +818,25 @@ class AdminEditProductScene extends React.Component {
    * @param data
    */
   setFeatureImage = (data) => {
-    this.setState({
-      feature_image: data[0].path
-    }, () => {
-      $('#media-modal').modal('hide');
-    });
+    if (data.length > 1) {
+      AlertComponentEvolution.show('Chỉ có thể chọn một ảnh đại diện.');
+    } else if (data.length === 0) {
+      AlertComponentEvolution.show('Chưa chọn ảnh đại diện.', () => {
+        $('#media-modal').modal('hide');
+      });
+    } else {
+      
+      if (data[0].file_type === 'mp4') {
+        AlertComponentEvolution.show('Chọn ảnh thay vì chọn Video.');
+      } else {
+        this.setState({
+          feature_image: data[0]
+        }, () => {
+          $('#media-modal').modal('hide');
+        });
+      }
+      
+    }
   };
   
   /**
@@ -780,10 +854,22 @@ class AdminEditProductScene extends React.Component {
    */
   setMainProductContentImage = (data) => {
     data.forEach((item) => {
-      // let width = item.dimensions_width / 2
-      // let height = item.dimensions_height / 2
+      let width = parseInt(item.dimensions_width / 2);
+      let height = parseInt(item.dimensions_height / 2);
       // CKEDITOR.instances['main-product-content'].insertHtml(`<img width="${width}" height="${height}" src="${item.path}" alt="${item.alt_text}" title="${item.title}">`);
-      CKEDITOR.instances['main-product-content'].insertHtml(`<img src="${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      if (item.file_type === 'mp4') {
+        // let createHtmlVideo = `<video controls>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/mp4"/>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/ogg"/>
+        //     Your browser does not support the video tag.
+        //   </video>`;
+        // Custom embed video by select elemebt of ckeditor and insert manual. You can't insert using insertHtml.
+        AlertComponentEvolution.show('Nhúng video vào bài viết bằng cách khác nhé.');
+      } else {
+        // You need set width height so that Ckeditor can changed image size
+        CKEDITOR.instances['main-product-content'].insertHtml(`<img data-id="${item._id}" class="dont-touch-me" width="${width}" height="${height}" src="${process.env.remoteServer}/${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      }
+      
     });
     $('#media-modal').modal('hide');
   };
@@ -794,10 +880,21 @@ class AdminEditProductScene extends React.Component {
    */
   setMainProductDetailContentImage = (data) => {
     data.forEach((item) => {
-      // let width = item.dimensions_width / 2
-      // let height = item.dimensions_height / 2
+      let width = parseInt(item.dimensions_width / 2);
+      let height = parseInt(item.dimensions_height / 2);
       // CKEDITOR.instances['main-product-content'].insertHtml(`<img width="${width}" height="${height}" src="${item.path}" alt="${item.alt_text}" title="${item.title}">`);
-      CKEDITOR.instances['product-detail'].insertHtml(`<img src="${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      if (item.file_type === 'mp4') {
+        // let createHtmlVideo = `<video controls>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/mp4"/>
+        //     <source src=${process.env.remoteServer}/${item.path} type="video/ogg"/>
+        //     Your browser does not support the video tag.
+        //   </video>`;
+        // Custom embed video by select elemebt of ckeditor and insert manual. You can't insert using insertHtml.
+        AlertComponentEvolution.show('Nhúng video vào bài viết bằng cách khác nhé.');
+      } else {
+        CKEDITOR.instances['product-detail'].insertHtml(`<img data-id="${item._id}" class="dont-touch-me" width="${width}" height="${height}" src="${process.env.remoteServer}/${item.path}" alt="${item.alt_text}" title="${item.title}">`);
+      }
+      
     });
     $('#media-modal').modal('hide');
   };
@@ -806,7 +903,29 @@ class AdminEditProductScene extends React.Component {
    *
    */
   createNewPost = () => {
+    SpinnerComponentEvolution.show();
+    // Get all image using in this post
+    let imageUsingInMainProductContent = CKEDITOR.instances['main-product-content'].document.find('.dont-touch-me').$;
+    let imageUsingInProductDetail = CKEDITOR.instances['product-detail'].document.find('.dont-touch-me').$;
+    let imageUsingInThisPost = []; // Array Media's id. To detect which post is using (contains) this Media. After created this Post, we will update these Media with Post Id.
+    [...imageUsingInMainProductContent, ...imageUsingInProductDetail].map(imageEl => {
+      imageUsingInThisPost.push(imageEl.dataset.id);
+    });
+    
+    if (!_.isEmpty(this.state.feature_image)) {
+      imageUsingInThisPost.push(this.state.feature_image._id);
+    }
+    
+    if (this.state.thumbnails.length !== 0) {
+      for (let image of this.state.thumbnails) {
+        imageUsingInThisPost.push(image._id);
+      }
+    }
+    // Remove duplicate value in array
+    imageUsingInThisPost = _.uniq(imageUsingInThisPost);
+    
     let data = {
+      oldSlug: this.props.productInfo.slug,
       name: this.state.name,
       slug: this.state.slug,
       status: this.state.status,
@@ -820,8 +939,25 @@ class AdminEditProductScene extends React.Component {
       tags: this.state.tagsSelectedOfPost,
       feature_image: this.state.feature_image,
       thumbnails: this.state.thumbnails,
+      imageUsingInThisPost
     };
-    console.log(data);
+    
+    axiosInstance().put(express_api.editProductUrl, data).then(result => {
+      SpinnerComponentEvolution.hide();
+      if (result.data.requestSuccessfully) {
+        // Redirect to edit product page
+        AlertComponentEvolution.show(result.data.message, () => {
+          window.removeEventListener('beforeunload', this.handleWindowClose);
+          window.location = `/admin/edit-product?slug=${result.data.data.slug}`;
+          window.addEventListener('beforeunload', this.handleWindowClose);
+        });
+      } else {
+        AlertComponentEvolution.show(result.data.message);
+      }
+    }).catch(error => {
+      SpinnerComponentEvolution.hide();
+      AlertComponentEvolution.show(error.message);
+    });
   };
   
   componentWillUnmount() {
@@ -831,9 +967,7 @@ class AdminEditProductScene extends React.Component {
     this.flatpickerInstance.destroy();
     $('#tags, #parent-category').select2('destroy');
     $('#media-modal').modal('dispose');
-    if(this.swiperSlideInstance) {
-      this.swiperSlideInstance.destroy(true, true);
-    }
+    window.removeEventListener('beforeunload', this.handleWindowClose);
   }
   
 }

@@ -214,7 +214,7 @@ export class MediaComponent extends React.Component {
                                 this.state.fileSelected.uploaded_to_posts.map((obj, index) => {
                                   return (
                                     <p className="mb-1" key={index}>
-                                      <Link prefetch href="https://google.com">
+                                      <Link prefetch href={`${process.env.domainName}/admin/edit-post?slug=${obj.slug}`}>
                                         <a target="_blank">
                                           - {obj.slug}
                                         </a>
@@ -232,7 +232,7 @@ export class MediaComponent extends React.Component {
                                 this.state.fileSelected.uploaded_to_products.map((obj, index) => {
                                   return (
                                     <p className="mb-1" key={index}>
-                                      <Link prefetch href="https://google.com">
+                                      <Link prefetch href={`${process.env.domainName}/admin/edit-product?slug=${obj.slug}`}>
                                         <a target="_blank">
                                           - {obj.slug}
                                         </a>
@@ -878,12 +878,12 @@ export class MediaComponent extends React.Component {
   
   //
   hideSceneCropImage = () => {
+    this.cropperInstance.destroy();
     this.setState({
       cropImageIsShow: false
-    }, () => {
-      this.cropperInstance.destroy();
     });
   };
+  
 }
 
 MediaComponent.propTypes = {

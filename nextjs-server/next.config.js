@@ -34,8 +34,8 @@ module.exports = {
   
   env: {
     // remoteServer: 'http://192.168.100.9:2709',
-    remoteServer: 'http://localhost:2709',
-    domainName: 'http://localhost:3000',
+    remoteServer: 'https://api.youmelifetime.com',
+    domainName: 'https://youmelifetime.com',
     publicKey: '-----BEGIN PUBLIC KEY-----\n' +
       'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIAUhFuNCaW6Y64uij9nD5dhfAJw6g7S\n' +
       'v7BhdwgKS7QKrbnM2qyi8hmVrFeFM8popzTcMmcp1QCPgK/kbqjKyYUCAwEAAQ==\n' +

@@ -36,7 +36,7 @@ class LoginScene extends React.Component {
   
   render() {
     return (
-      <div id='wrapped-login' style={{backgroundImage: `url('http://localhost:2709/img/login-bg.jpg')`}}>
+      <div id='wrapped-login' style={{backgroundImage: `url('${process.env.remoteServer}/img/login-bg.jpg')`}}>
         <div id='login' >
           <h2>Login</h2>
           <input name='email' placeholder='Email' type='text'

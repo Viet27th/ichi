@@ -3,6 +3,8 @@
 # dependencies
 /express-server/node_modules
 /nextjs-server/node_modules
+/express-server/package-lock.json
+/nextjs-server/package-lock.json
 
 # static image folder
 /express-server/public/store

@@ -4,6 +4,7 @@ import {AlertComponentEvolution} from '../components/alert';
 import {LoginComponentEvolution} from '../components/login';
 import Router from 'next/router';
 import {express_api} from './express_api.service';
+import https from 'https';
 
 /**
  *
@@ -19,7 +20,10 @@ export const axiosInstance = function (req) {
   }
   
   let axiosInstance = axios.create({
-    timeout: 9000
+    timeout: 9000,
+    httpsAgent: new https.Agent({  
+      rejectUnauthorized: false
+    })
   });
   axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   

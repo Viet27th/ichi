@@ -33,8 +33,6 @@ class MyDocument extends Document {
           
         </Head>
         <body id="body">
-          <Main/>
-          <NextScript/>
 
           <script src='/static/library/jquery/jquery-3.2.1.min.js'></script>
           <script src='/static/library/popper-1.14.7/popper.min.js'></script>
@@ -46,7 +44,9 @@ class MyDocument extends Document {
           <script type="text/javascript" src="/static/library/slick-1.8.1/slick/slick.min.js"></script>
           <script type="text/javascript" src="/static/library/swiper-master/dist/js/swiper.min.js"></script>
           <script type="text/javascript" src="/static/library/cropperjs/dist/cropper.min.js"></script>
-        
+         
+	  <Main/>
+          <NextScript/>
         </body>
       </Html>
     );

@@ -45,8 +45,9 @@ class MyDocument extends Document {
           <script type="text/javascript" src="/static/library/swiper-master/dist/js/swiper.min.js"></script>
           <script type="text/javascript" src="/static/library/cropperjs/dist/cropper.min.js"></script>
          
-	  <Main/>
+	        <Main/>
           <NextScript/>
+          
         </body>
       </Html>
     );

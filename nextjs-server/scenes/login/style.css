@@ -39,19 +39,6 @@ input[type="text"], input[type="password"], input[type="email"] {
   /*color: #6D7781;*/
   color: #ffffff;
   font-size: 16px;
-  
-  animation: typewriter 1s steps(44) 1s 1 normal both,
-  blinkTextCursor 500ms steps(44) infinite normal;
-}
-
-/* Animation */
-@keyframes typewriter{
-  from{width: 0;}
-  to{width: 350px;}
-}
-@keyframes blinkTextCursor{
-  from{border-right-color: rgba(255,255,255,.75);}
-  to{border-right-color: transparent;}
 }
 
 ::-webkit-input-placeholder {
@@ -125,8 +112,8 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 
 input[type="submit"] {
-  /*background: #3A5059;*/
-  background: transparent;
+  background: #3A5059;
+  /*background: transparent;*/
   opacity: 0.5;
   border: 0;
   width: 350px;

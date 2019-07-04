@@ -20,6 +20,15 @@ import {express_api} from '../services/express_api.service';
 import {Provider} from 'react-redux';
 import withReduxStore from '../redux_store';
 
+Router.events.on('routeChangeStart', (url) => {
+  SpinnerComponentEvolution.show();
+});
+Router.events.on('routeChangeComplete', (url) => {
+  SpinnerComponentEvolution.hide();
+});
+Router.events.on('routeChangeError', (err, url) => {
+  SpinnerComponentEvolution.hide();
+});
 
 class MyApp extends App {
   // In page as login.js, register.js, hell is different with ctx

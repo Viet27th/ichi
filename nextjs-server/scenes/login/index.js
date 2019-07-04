@@ -42,10 +42,12 @@ class LoginScene extends React.Component {
           <input name='email' placeholder='Email' type='text'
             value={this.state.email}
             onChange={this.handleChange}
+            onKeyUp={this.handlePressEnter}
           />
           <input name='password' placeholder='Password' type='password'
             value={this.state.password}
             onChange={this.handleChange}
+            onKeyUp={this.handlePressEnter}
           />
           
           <div className='social pt-5 pb-3 d-flex justify-content-center align-items-center'>
@@ -70,6 +72,21 @@ class LoginScene extends React.Component {
         <style jsx>{style}</style>
       </div>
     );
+  };
+  
+  /**
+   * When input is focused, You can press Enter to submit form
+   * @param event
+   */
+  handlePressEnter = (event) => {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.querySelector('input[type=submit]').click();
+      event.currentTarget.blur();
+    }
   };
   
   /**

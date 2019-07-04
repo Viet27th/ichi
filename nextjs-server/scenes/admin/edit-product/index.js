@@ -105,6 +105,22 @@ class AdminEditProductScene extends React.Component {
     
     return (
       <div>
+        <Head>
+          <link rel="stylesheet" href='/static/library/select2/dist/css/select2.min.css'/>
+          <link rel="stylesheet" href='/static/library/flatpickr/dist/flatpickr.min.css'/>
+          <link rel="stylesheet" href='/static/library/checkbox-style/checkbox-style.css'/>
+          <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick.css"/>
+          <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick-theme.css"/>
+          <link rel="stylesheet" type="text/css" href="/static/library/swiper-master/dist/css/swiper.min.css"/>
+          <link rel="stylesheet" type="text/css" href="/static/library/cropperjs/dist/cropper.min.css"/>
+    
+          <script src='/static/library/ckeditor/ckeditor.js'></script>
+          <script src='/static/library/select2/dist/js/select2.full.min.js'></script>
+          <script src='/static/library/flatpickr/dist/flatpickr.min.js'></script>
+          <script type="text/javascript" src="/static/library/slick-1.8.1/slick/slick.min.js"></script>
+          <script type="text/javascript" src="/static/library/swiper-master/dist/js/swiper.min.js"></script>
+          <script type="text/javascript" src="/static/library/cropperjs/dist/cropper.min.js"></script>
+        </Head>
         
         <div className='row'>
           <div className='col-md-7 col-lg-8'>
@@ -288,7 +304,7 @@ class AdminEditProductScene extends React.Component {
                 {/*panel footer*/}
                 <div className='hljs-wrapper'>
                   <div className='hljs clearfix'>
-                    <button type='button' className='btn btn-primary pull-right' onClick={this.createNewPost}>Submit
+                    <button type='button' className='btn btn-primary pull-right' onClick={this.updatePost}>Submit
                     </button>
                   </div>
                 </div>
@@ -474,7 +490,21 @@ class AdminEditProductScene extends React.Component {
     );
   }
   
-  componentDidMount() {
+  async componentDidMount() {
+    let precondition = new Promise(resolve => {
+      let until = setInterval(() => {
+        if(typeof VZoom !== 'undefined' &&
+          typeof CKEDITOR !== 'undefined' &&
+          typeof flatpickr !== 'undefined' &&
+          typeof jQuery.fn.select2 !== 'undefined' &&
+          typeof Swiper !== 'undefined') {
+          clearInterval(until);
+          resolve();
+        }
+      }, 10);
+    });
+    await precondition;
+    
     /**
      * https://stackoverflow.com/questions/11453741/javascript-beforeunload-detect-refresh-versus-close
      */
@@ -902,7 +932,7 @@ class AdminEditProductScene extends React.Component {
   /**
    *
    */
-  createNewPost = () => {
+  updatePost = () => {
     SpinnerComponentEvolution.show();
     // Get all image using in this post
     let imageUsingInMainProductContent = CKEDITOR.instances['main-product-content'].document.find('.dont-touch-me').$;

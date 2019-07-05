@@ -112,14 +112,12 @@ class AdminEditProductScene extends React.Component {
           <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick.css"/>
           <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick-theme.css"/>
           <link rel="stylesheet" type="text/css" href="/static/library/swiper-master/dist/css/swiper.min.css"/>
-          <link rel="stylesheet" type="text/css" href="/static/library/cropperjs/dist/cropper.min.css"/>
     
           <script src='/static/library/ckeditor/ckeditor.js'></script>
           <script src='/static/library/select2/dist/js/select2.full.min.js'></script>
           <script src='/static/library/flatpickr/dist/flatpickr.min.js'></script>
           <script type="text/javascript" src="/static/library/slick-1.8.1/slick/slick.min.js"></script>
           <script type="text/javascript" src="/static/library/swiper-master/dist/js/swiper.min.js"></script>
-          <script type="text/javascript" src="/static/library/cropperjs/dist/cropper.min.js"></script>
         </Head>
         
         <div className='row'>

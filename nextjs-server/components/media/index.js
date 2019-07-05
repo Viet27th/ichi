@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './style.css';
+import Head from 'next/head';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import _ from 'lodash';
@@ -35,16 +36,20 @@ export class MediaComponent extends React.Component {
     if (!this.state.cropImageIsShow) {
       return (
         <div>
+          <Head>
+            <link rel="stylesheet" type="text/css" href="/static/library/cropperjs/dist/cropper.min.css"/>
+            <script type="text/javascript" src="/static/library/cropperjs/dist/cropper.min.js"></script>
+          </Head>
           
           <ul className="nav nav-tabs" id="myTab" role="tablist">
             <li className="nav-item">
               <a className="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab"
-                 aria-controls="home"
-                 aria-selected="true">Media</a>
+                aria-controls="home"
+                aria-selected="true">Media</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" id="upload-tab" data-toggle="tab" href="#upload" role="tab"
-                 aria-controls="profile" aria-selected="false">Upload Media</a>
+                aria-controls="profile" aria-selected="false">Upload Media</a>
             </li>
           </ul>
           <div className="tab-content" id="myTabContent">
@@ -107,9 +112,9 @@ export class MediaComponent extends React.Component {
                             this.state.fileSelected.file_type === 'mp4' ?
                               <video controls>
                                 <source src={`${process.env.remoteServer}/${this.state.fileSelected.path}`}
-                                        type="video/mp4"/>
+                                  type="video/mp4"/>
                                 <source src={`${process.env.remoteServer}/${this.state.fileSelected.path}`}
-                                        type="video/ogg"/>
+                                  type="video/ogg"/>
                                 Your browser does not support the video tag.
                               </video> :
                               <img
@@ -134,10 +139,10 @@ export class MediaComponent extends React.Component {
                             <div className="form-group">
                               <label htmlFor="original_name">Media file name:</label>
                               <input type="text" className="form-control" id="media_file_name"
-                                     placeholder="Media file name"
-                                     name="media_file_name"
-                                     value={this.state.fileSelected.media_file_name}
-                                     onChange={this.handleChange}/>
+                                placeholder="Media file name"
+                                name="media_file_name"
+                                value={this.state.fileSelected.media_file_name}
+                                onChange={this.handleChange}/>
                             </div>
                           </li>
                           <li>- Type: {this.state.fileSelected.file_type}</li>
@@ -159,9 +164,9 @@ export class MediaComponent extends React.Component {
                             <div className="form-group">
                               <label htmlFor="alt">Alt text:</label>
                               <input type="text" className="form-control" id="alt" placeholder="Alt text"
-                                     name="alt_text"
-                                     value={this.state.fileSelected.alt_text}
-                                     onChange={this.handleChange}/>
+                                name="alt_text"
+                                value={this.state.fileSelected.alt_text}
+                                onChange={this.handleChange}/>
                               <small className="text-primary d-block">
                                 - Specifies an alternate text for an image.
                               </small>
@@ -171,9 +176,9 @@ export class MediaComponent extends React.Component {
                             <div className="form-group">
                               <label htmlFor="title">Title:</label>
                               <textarea className="form-control" id="title" rows="3"
-                                        name="title"
-                                        value={this.state.fileSelected.title}
-                                        onChange={this.handleChange}></textarea>
+                                name="title"
+                                value={this.state.fileSelected.title}
+                                onChange={this.handleChange}></textarea>
                               <small className="text-primary d-block">
                                 - The name of the media. A title is often shown on attachment pages and galleries if
                                 themes or
@@ -187,18 +192,18 @@ export class MediaComponent extends React.Component {
                             <div className="form-group">
                               <label htmlFor="caption">Caption:</label>
                               <textarea className="form-control" id="caption" rows="3"
-                                        name="caption"
-                                        value={this.state.fileSelected.caption}
-                                        onChange={this.handleChange}></textarea>
+                                name="caption"
+                                value={this.state.fileSelected.caption}
+                                onChange={this.handleChange}></textarea>
                             </div>
                           </li>
                           <li>
                             <div className="form-group">
                               <label htmlFor="description">Description:</label>
                               <textarea className="form-control" id="description" rows="3"
-                                        name="description"
-                                        value={this.state.fileSelected.description}
-                                        onChange={this.handleChange}></textarea>
+                                name="description"
+                                value={this.state.fileSelected.description}
+                                onChange={this.handleChange}></textarea>
                             </div>
                           </li>
                           <li>
@@ -244,7 +249,7 @@ export class MediaComponent extends React.Component {
                           </li>
                           <li className="mt-2">
                             <p className="text-primary mb-0 cursor-pointer font-weight-bold"
-                               onClick={this.updateMedia}>Update</p>
+                              onClick={this.updateMedia}>Update</p>
                           </li>
                           <li className="mt-2">
                             <p className="text-danger cursor-pointer font-weight-bold" onClick={this.deleteMedia}>Delete
@@ -262,8 +267,8 @@ export class MediaComponent extends React.Component {
             <div className="tab-pane fade" id="upload" role="tabpanel" aria-labelledby="upload-tab">
               <div id="form-upload-images">
                 <input id="files" name="files[]" type="file" multiple className="cursor-pointer"
-                       ref={this.inputFiles}
-                       onChange={this.checkFilesUpload}/>
+                  ref={this.inputFiles}
+                  onChange={this.checkFilesUpload}/>
                 <p id="show-file-name">Drag files here <br/> Or, if you prefer</p>
                 <div className='wrapper-upload-button'>
                   <button type="button" className="btn btn-secondary">Choose files to upload</button>
@@ -282,6 +287,11 @@ export class MediaComponent extends React.Component {
     } else {
       return (
         <div id="crop-image-scene">
+          <Head>
+            <link rel="stylesheet" type="text/css" href="/static/library/cropperjs/dist/cropper.min.css"/>
+            <script type="text/javascript" src="/static/library/cropperjs/dist/cropper.min.js"></script>
+          </Head>
+          
           <div className="row m-0">
             <div id="wrap-image-cropping" className="col-lg-8 mt-lg-0 mt-2">
               <div>
@@ -308,10 +318,10 @@ export class MediaComponent extends React.Component {
                 {/* Scale */}
                 <div className="col-12 d-flex justify-content-start align-items-center mt-2">
                   <input type="input" className="form-control form-control-sm" id="scale-width"
-                         style={{width: '50px'}}/>
+                    style={{width: '50px'}}/>
                   <span className="ml-1 mr-1">x</span>
                   <input type="input" className="form-control form-control-sm" id="scale-height"
-                         style={{width: '50px'}}/>
+                    style={{width: '50px'}}/>
                   <button id="scale-btn" className="btn btn-primary btn-sm ml-2">Scale</button>
                 </div>
                 
@@ -320,10 +330,10 @@ export class MediaComponent extends React.Component {
                   
                   <span className="mr-2">Current Selection:</span>
                   <input type="input" disabled className="form-control form-control-sm" id="crop-width-show"
-                         style={{width: '50px'}}/>
+                    style={{width: '50px'}}/>
                   <span className="ml-1 mr-1">x</span>
                   <input type="input" disabled className="form-control form-control-sm" id="crop-height-show"
-                         style={{width: '50px'}}/>
+                    style={{width: '50px'}}/>
                 
                 </div>
                 
@@ -334,7 +344,7 @@ export class MediaComponent extends React.Component {
                   <input type="input" className="form-control form-control-sm" id="crop-width" style={{width: '50px'}}/>
                   <span className="ml-1 mr-1">x</span>
                   <input type="input" className="form-control form-control-sm" id="crop-height"
-                         style={{width: '50px'}}/>
+                    style={{width: '50px'}}/>
                 
                 </div>
                 
@@ -343,12 +353,12 @@ export class MediaComponent extends React.Component {
                   <div className="btn-group d-flex flex-nowrap" data-toggle="buttons">
                     <label className="btn btn-primary cursor-pointer active">
                       <input type="radio" className="sr-only" id="aspectRatio1" name="aspectRatio"
-                             value="1.7777777777777777"/>
+                        value="1.7777777777777777"/>
                       <span className="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 16 / 9">16:9</span>
                     </label>
                     <label className="btn btn-primary cursor-pointer">
                       <input type="radio" className="sr-only" id="aspectRatio2" name="aspectRatio"
-                             value="1.3333333333333333"/>
+                        value="1.3333333333333333"/>
                       <span className="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 4 / 3">4:3</span>
                     </label>
                     <label className="btn btn-primary cursor-pointer">
@@ -357,7 +367,7 @@ export class MediaComponent extends React.Component {
                     </label>
                     <label className="btn btn-primary cursor-pointer">
                       <input type="radio" className="sr-only" id="aspectRatio4" name="aspectRatio"
-                             value="0.6666666666666666"/>
+                        value="0.6666666666666666"/>
                       <span className="docs-tooltip" data-toggle="tooltip" title="aspectRatio: 2 / 3">2:3</span>
                     </label>
                     <label className="btn btn-primary cursor-pointer">
@@ -386,7 +396,17 @@ export class MediaComponent extends React.Component {
     
   }
   
-  componentDidMount() {
+  async componentDidMount() {
+    let precondition = new Promise(resolve => {
+      let until = setInterval(() => {
+        if(typeof Cropper !== 'undefined') {
+          clearInterval(until);
+          resolve();
+        }
+      }, 10);
+    });
+    await precondition;
+    
     this.getAllMedia();
   }
   

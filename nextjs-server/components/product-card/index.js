@@ -50,6 +50,9 @@ export class ProductCardComponent extends React.Component {
               <span className="active d-inline-flex justify-content-center align-items-center cursor-pointer">
                 <i className="fas fa-heart"></i>
               </span>
+              <span className="d-inline-flex justify-content-center align-items-center cursor-pointer">
+                <i className="far fa-envelope"></i>
+              </span>
             </div>
           </div>
         </div>

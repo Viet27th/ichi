@@ -1,0 +1,67 @@
+.card {
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.27);
+}
+
+.card .wrapper-card-img-top {
+  height: 200px;
+}
+
+.card .wrapper-card-img-top img.card-img-top {
+  height: 100%;
+  object-fit: cover;
+}
+
+.card .card-title {
+  height: 27px;
+  line-height: 27px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+}
+
+.card .card-title a {
+  color: rgba(120, 177, 68, .9);
+}
+
+.card .card-text {
+  height: 65px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  
+  color: #333;
+  font-size: 14px;
+}
+
+.card .card-body .product-comment {
+  font-size: 13px;
+}
+
+.card .card-body .product-comment i {
+  color: rgba(120, 177, 68, .9);
+}
+
+.card .card-body .product-button span {
+  width: 37px;
+  height: 37px;
+  background-color: #ffffff;
+  color: rgba(120, 177, 68, .9);
+  border: 1px solid rgba(120, 177, 68, .9);
+  margin: 9px 4px;
+  padding: 9px;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: all 0.27s ease-in;
+}
+
+.card .card-body .product-button span.active,
+.card .card-body .product-button span:hover{
+  background-color: rgba(120, 177, 68, .9);
+  color: #ffffff;
+}

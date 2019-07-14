@@ -84,6 +84,12 @@ class MyApp extends App {
             <WrappedAdminPagesComponent>
               <Component {...pageProps}/>
               <style global jsx>{`
+              @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700i&display=swap&subset=vietnamese');
+              
+              body {
+                font-family: 'Playfair Display', sans-serif;
+              }
+              
               body, #__next {
                 min-height: 100vh;
               }
@@ -94,6 +100,12 @@ class MyApp extends App {
               
               a:hover {
                 text-decoration: none !important;
+              }
+              
+              ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
               }
               
             `}</style>
@@ -108,6 +120,18 @@ class MyApp extends App {
             <WrappedUserPagesComponent>
               <Component {...pageProps} />
               <style global jsx>{`
+              @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700i&display=swap&subset=vietnamese');
+              
+              body {
+                font-family: 'Playfair Display', sans-serif;
+              }
+              
+              @media (max-width: 768px) {
+                body {
+                  padding-bottom: 50px;
+                }
+              }
+              
               body, #__next {
                 min-height: 100vh;
               }
@@ -118,6 +142,12 @@ class MyApp extends App {
               
               a:hover {
                 text-decoration: none !important;
+              }
+              
+              ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
               }
               
             `}</style>

@@ -74,6 +74,10 @@ class LoginScene extends React.Component {
     );
   };
   
+  componentDidMount() {
+    document.querySelector('input[name=email]').focus();
+  }
+  
   /**
    * When input is focused, You can press Enter to submit form
    * @param event

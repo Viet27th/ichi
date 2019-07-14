@@ -54,7 +54,7 @@ class LeftSidebarComponent extends React.Component {
                 </a>
               </Link>
             </li>
-  
+            
             <li className={pathname === '/admin/media' ? 'active' : ''}>
               <Link prefetch href='/admin/media'>
                 <a>
@@ -63,7 +63,7 @@ class LeftSidebarComponent extends React.Component {
                 </a>
               </Link>
             </li>
-  
+            
             <li
               onClick={this.handleDropdown}
               className={`has-sub ${pathname === '/admin/create-product' || pathname === '/admin/products' ? 'active' : ''}`}>
@@ -72,22 +72,22 @@ class LeftSidebarComponent extends React.Component {
                 <i className="fas fa-seedling"></i>
                 <span>Products</span>
               </a>
-    
+              
               <ul className="sub-menu">
                 <li className={pathname === '/admin/products' ? 'active' : ''}>
                   <Link prefetch href='/admin/products'>
                     <a>All Products</a>
                   </Link>
                 </li>
-      
+                
                 <li className={pathname === '/admin/create-product' ? 'active' : ''}>
                   <Link prefetch href='/admin/create-product'>
                     <a>Add New <i className="fa fa-paper-plane text-theme"></i></a>
                   </Link>
                 </li>
-    
+              
               </ul>
-  
+            
             </li>
             
             <li
@@ -116,41 +116,41 @@ class LeftSidebarComponent extends React.Component {
             
             </li>
             
-            {/*<li className="has-sub active">*/}
-            {/*<a href="javascript:void(0);">*/}
-            {/*<b className="caret"></b>*/}
-            {/*<i className="fa fa-align-left"></i>*/}
-            {/*<span>Menu Level</span>*/}
-            {/*</a>*/}
-            {/*<ul className="sub-menu">*/}
-            {/*<li className="has-sub active">*/}
-            {/*<a href="javascript:void(0);">*/}
-            {/*<b className="caret"></b>*/}
-            {/*Menu 1.1*/}
-            {/*</a>*/}
-            {/*<ul className="sub-menu">*/}
-            {/*<li className="has-sub active">*/}
-            {/*<a href="javascript:void(0);">*/}
-            {/*<b className="caret"></b>*/}
-            {/*Menu 2.1*/}
-            {/*</a>*/}
-            {/*<ul className="sub-menu">*/}
-            {/*<li><a href="javascript:void(0);">Menu 3.1</a></li>*/}
-            {/*<li><a href="javascript:void(0);">Menu 3.2</a></li>*/}
-            {/*</ul>*/}
-            {/*</li>*/}
-            {/*<li><a href="javascript:void(0);">Menu 2.2</a></li>*/}
-            {/*<li><a href="javascript:void(0);">Menu 2.3</a></li>*/}
-            {/*</ul>*/}
-            {/*</li>*/}
-            {/*<li><a href="javascript:void(0);">Menu 1.2</a></li>*/}
-            {/*<li>*/}
-            {/*<Link prefetch href="/admin/post-list">*/}
-            {/*<a>Menu 1.3</a>*/}
-            {/*</Link>*/}
-            {/*</li>*/}
-            {/*</ul>*/}
-            {/*</li>*/}
+            <li className="has-sub">
+              <a href="javascript:void(0);">
+                <b className="caret"></b>
+                <i className="fa fa-align-left"></i>
+                <span>Menu Level</span>
+              </a>
+              <ul className="sub-menu">
+                <li className="has-sub active">
+                  <a href="javascript:void(0);">
+                    <b className="caret"></b>
+                    Menu 1.1
+                  </a>
+                  <ul className="sub-menu">
+                    <li className="has-sub active">
+                      <a href="javascript:void(0);">
+                        <b className="caret"></b>
+                        Menu 2.1
+                      </a>
+                      <ul className="sub-menu">
+                        <li><a href="javascript:void(0);">Menu 3.1</a></li>
+                        <li><a href="javascript:void(0);">Menu 3.2</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="javascript:void(0);">Menu 2.2</a></li>
+                    <li><a href="javascript:void(0);">Menu 2.3</a></li>
+                  </ul>
+                </li>
+                <li><a href="javascript:void(0);">Menu 1.2</a></li>
+                <li>
+                  <Link prefetch href="/admin/post-list">
+                    <a>Menu 1.3</a>
+                  </Link>
+                </li>
+              </ul>
+            </li>
             
             <li className="has-sub">
               <a href="javascript:void(0);">

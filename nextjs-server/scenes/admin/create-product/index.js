@@ -94,14 +94,11 @@ class AdminCreateProductScene extends React.Component {
           <link rel="stylesheet" href='/static/library/select2/dist/css/select2.min.css'/>
           <link rel="stylesheet" href='/static/library/flatpickr/dist/flatpickr.min.css'/>
           <link rel="stylesheet" href='/static/library/checkbox-style/checkbox-style.css'/>
-          <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick.css"/>
-          <link rel="stylesheet" type="text/css" href="/static/library/slick-1.8.1/slick/slick-theme.css"/>
           <link rel="stylesheet" type="text/css" href="/static/library/swiper-master/dist/css/swiper.min.css"/>
-  
+          
           <script src='/static/library/ckeditor/ckeditor.js'></script>
           <script src='/static/library/select2/dist/js/select2.full.min.js'></script>
           <script src='/static/library/flatpickr/dist/flatpickr.min.js'></script>
-          <script type="text/javascript" src="/static/library/slick-1.8.1/slick/slick.min.js"></script>
           <script type="text/javascript" src="/static/library/swiper-master/dist/js/swiper.min.js"></script>
         </Head>
         
@@ -124,7 +121,7 @@ class AdminCreateProductScene extends React.Component {
                     defaultValue={this.state.slug}/>
                 </div>
                 
-                {/* Slick slide */}
+                {/* Swipe slide */}
                 <div>
                   <button className="btn btn-primary mb-3"
                     data-purpose="thumbnails"
@@ -469,7 +466,7 @@ class AdminCreateProductScene extends React.Component {
   async componentDidMount() {
     let precondition = new Promise(resolve => {
       let until = setInterval(() => {
-        if(typeof VZoom !== 'undefined' &&
+        if (typeof VZoom !== 'undefined' &&
           typeof CKEDITOR !== 'undefined' &&
           typeof flatpickr !== 'undefined' &&
           typeof jQuery.fn.select2 !== 'undefined' &&
@@ -480,12 +477,12 @@ class AdminCreateProductScene extends React.Component {
       }, 10);
     });
     await precondition;
-   
+    
     /**
      * https://stackoverflow.com/questions/11453741/javascript-beforeunload-detect-refresh-versus-close
      */
     window.addEventListener('beforeunload', this.handleWindowClose);
-
+    
     /**
      * Event handle for four button onto panel-header
      */
@@ -493,11 +490,11 @@ class AdminCreateProductScene extends React.Component {
       let Default = {
         animationSpeed: 279
       };
-
+      
       let Event = {
         collapse: 'collapse'
       };
-
+      
       $('[data-v-click]').each(function () {
         $(this).on('click', function (e) {
           let parentOfIt = $(this).parents('.panel-heading');
@@ -507,10 +504,10 @@ class AdminCreateProductScene extends React.Component {
             affected.toggle(Default.animationSpeed);
           }
         });
-
+        
       });
     }();
-
+    
     // Register VZoom
     this.vzoomInstance = VZoom.init('.vzoom', {
       backgroundColor: 'rgba(0,0,0,.95)',
@@ -518,7 +515,7 @@ class AdminCreateProductScene extends React.Component {
       duration: '279',
       zoomPercentage: 50,
     });
-
+    
     // Replace the <textarea id=''> with a CKEditor
     let ckeditorOption = {
       height: 270,
@@ -532,7 +529,7 @@ class AdminCreateProductScene extends React.Component {
       youtube_related: true,
       allowedContent: true, // Allow set attribute (i.e: class) for element when using insertHtml of Ckeditor
     };
-
+    
     CKEDITOR.replace('main-product-content', ckeditorOption);
     CKEDITOR.replace('product-detail', ckeditorOption);
     // U can use "setData()"|"insertText()"|"insertHtml()" to change value in text editor.
@@ -545,14 +542,14 @@ class AdminCreateProductScene extends React.Component {
         main_product_content: this.getData()
       });
     });
-
+    
     CKEDITOR.instances['product-detail'].on('change', function (e) {
       self.setState({
         product_detail: this.getData()
       });
     });
-
-
+    
+    
     // Register flatpickr
     this.flatpickerInstance = flatpickr(this.publish_date.current, {
       defaultDate: this.state.publish_date,
@@ -562,16 +559,16 @@ class AdminCreateProductScene extends React.Component {
       dateFormat: 'Y-m-d H:i',
       onChange: this.handleChangePublishDate,
     });
-
+    
     // Register select2
     $('#tags').select2({
       tags: true // if select tag is multiple, create tag if not exist
     }).on('change', this.handleChangeTagsProductBelongTo);
-
+    
     $('#parent-category').select2({
       tags: true // if select tag is multiple, create tag if not exist
     }).on('change', this.handleChange);
-
+    
     // Get first list category
     this.getListCategory();
     // Get first list tag

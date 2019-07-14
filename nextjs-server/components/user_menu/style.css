@@ -1,0 +1,349 @@
+@media (min-width: 769px) {
+  
+  /* CSS menu */
+  #menu {
+    position: absolute;
+    top: 109px;
+    width: 85vw;
+    height: 85px;
+    background-color: #ffffff;
+    z-index: 2;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+  }
+  
+  #menu:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    background-color: #ffffff;
+    border-radius: 47%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: calc((85px - 170px) / 2);
+  }
+  
+  #menu > ul > li {
+    display: inline-block;
+    line-height: 85px;
+    margin: 0 15px;
+  }
+  
+  #menu > ul.left-content {
+    float: left;
+  }
+  
+  #menu > ul.left-content li a {
+    color: rgba(0, 0, 0, .9);
+    font-size: 13px;
+  }
+  
+  #menu > ul.left-content > li:hover > a,
+  #menu > ul.left-content > li a.active {
+    color: rgba(120, 177, 68, 1);
+    position: relative;
+  }
+  
+  #menu > ul.left-content > li:hover > a:after,
+  #menu > ul.left-content > li a.active:after {
+    content: '\f18c';
+    font-family: 'Font Awesome 5 Brands';
+    position: absolute;
+    margin-left: 3px;
+  }
+  
+  #menu > ul.left-content li.has-sub {
+    position: relative;
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu {
+    position: absolute;
+    min-width: 230px;
+    background-color: rgba(244, 233, 233, 0.81);
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu li {
+    line-height: 30px;
+    position: relative;
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu li.has-sub:after {
+    content: '\f0a4';
+    font-family: 'Font Awesome 5 Free';
+    position: absolute;
+    right: 9px;
+    top: 11px;
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu li.has-sub:hover:after {
+    color: rgba(120, 177, 68, 1);
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu {
+    display: none;
+  }
+  
+  #menu > ul.left-content li.has-sub:hover > ul.sub-menu {
+    display: block;
+  }
+  
+  #menu > ul.left-content > li.has-sub ul.sub-menu li.has-sub ul.sub-menu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu li:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, .27);
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu li a {
+    padding: 9px 15px;
+  }
+  
+  #menu > ul.left-content li.has-sub ul.sub-menu li:hover > a {
+    color: rgba(120, 177, 68, 1);
+    background-color: rgba(244, 233, 233, 0.95);
+  }
+  
+  /**/
+  #menu ul.right-content li#toggle-block-account-info {
+    position: relative;
+  }
+  
+  #menu ul.right-content li#toggle-block-account-info.active > ul {
+    display: block;
+  }
+  
+  #menu ul.right-content li#toggle-block-account-info > ul {
+    position: absolute;
+    right: 0;
+    width: 230px;
+    background-color: #ffffff;
+    display: none;
+  }
+  
+  #menu ul.right-content li#toggle-block-account-info > ul > li {
+    line-height: 30px;
+    position: relative;
+    color: rgba(120, 177, 68, 1);
+    font-size: 13px;
+  }
+  
+  #menu ul.right-content li#toggle-block-account-info > ul > li:hover {
+    font-size: 15px;
+  }
+  
+  #menu ul.right-content li#toggle-block-account-info > ul > li > i {
+    position: absolute;
+    left: 8px;
+    top: 17px;
+  }
+  
+  #menu ul.right-content li#toggle-block-account-info > ul > li:not(:last-child) {
+    border-bottom: 1px dashed rgba(0, 0, 0, .27);
+  }
+  
+  #menu ul.right-content li#toggle-block-account-info > ul > li > a {
+    color: rgba(120, 177, 68, 1);
+    padding: 9px 27px;
+  }
+  
+  #menu #main-logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 195px;
+    z-index: 1;
+    line-height: 85px;
+  }
+  
+  #menu ul.right-content {
+    float: right;
+  }
+  
+  #menu ul.right-content .wrapper-search {
+    position: relative;
+  }
+  
+  #menu ul.right-content .wrapper-search .search-icon {
+    font-size: 22px;
+    position: absolute;
+    top: 1px;
+    z-index: 1;
+    opacity: .5;
+    left: 5px;
+    cursor: pointer;
+  }
+  
+  #menu ul.right-content #input-search {
+    height: 35px;
+    border-radius: 27px;
+    position: relative;
+    padding-left: 30px;
+    width: 95px;
+    border: none;
+    transition: width 300ms ease-in;
+    font-size: 13px;
+  }
+  
+  #menu ul.right-content #input-search:focus {
+    width: 127px;
+    border: 1px solid rgba(120, 177, 68, 1);
+  }
+  
+  #menu ul.right-content #basket-custom {
+    font-size: 27px;
+    color: rgba(120, 177, 68, 1);
+    position: relative;
+    top: 4px;
+  }
+  
+  #menu ul.right-content #bar-custom {
+    font-size: 20px;
+    color: rgba(0, 0, 0, .27);
+    position: relative;
+    top: 3px;
+  }
+  
+  /* End CSS menu */
+ 
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+
+  
+}
+
+@media (max-width: 768px) {
+  
+  /* CSS menu */
+  #menu {
+    height: 95px;
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    width: 100vw;
+  }
+  
+  #menu ul.left-content {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.95);
+    z-index: 3;
+    padding: 30px 0;
+    transition: left 300ms ease-in;
+  }
+  
+  #menu ul.left-content.active {
+    box-shadow: 6px 0 17px rgba(0, 0, 0, .27);
+    left: 0;
+  }
+  
+  #menu ul.left-content > li:not(:last-child) {
+    border-bottom: 1px dashed rgba(0, 0, 0, .5);
+  }
+  
+  #menu ul.left-content li > ul {
+    padding-left: 27px;
+  }
+  
+  #menu ul.left-content li > a {
+    padding: 9px 0 9px 15px;
+    color: rgba(120, 177, 68, 1);
+    font-weight: bold;
+    display: block;
+  }
+  
+  #menu ul.left-content li {
+    position: relative;
+  }
+  
+  #menu ul.left-content li.has-sub:after {
+    content: '\f067';
+    font-family: 'Font Awesome 5 Free';
+    position: absolute;
+    right: 9px;
+    top: 11px;
+    font-weight: 900;
+    font-size: 14px;
+    color: rgba(120, 177, 68, 1);
+  }
+  
+  #menu ul.left-content li.has-sub .sub-menu {
+    display: none;
+  }
+  
+  #menu ul.left-content li.has-sub.active > .sub-menu {
+    display: block;
+  }
+  
+  #menu #toggle-mobile-left-sidebar {
+    font-size: 29px;
+    position: absolute;
+    padding: 25px;
+    top: 9px;
+    right: 0;
+    color: rgba(120, 177, 68, 1);
+  }
+  
+  #menu #main-logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 195px;
+    z-index: 1;
+    line-height: 85px;
+  }
+  
+  #sticky-menu-bottom-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(250, 255, 248, 0.95);
+    box-shadow: 0 -1px 19px rgba(0, 0, 0, .5);
+    height: 50px;
+    z-index: 3;
+  }
+  
+  #sticky-menu-bottom-mobile > span {
+    height: 100%;
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    color: rgba(0, 0, 0, .4);
+    font-size: 12px;
+  }
+  
+  #sticky-menu-bottom-mobile > span > i {
+    font-size: 18px;
+  }
+  
+  #sticky-menu-bottom-mobile > span > i[data-highlight="highlight"] {
+    font-size: 21px;
+    color: rgba(120, 177, 68, 1);
+  }
+  
+  /* End CSS menu */
+
+}

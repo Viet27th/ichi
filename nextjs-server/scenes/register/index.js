@@ -45,27 +45,27 @@ class RegisterScene extends React.Component {
           <h2>Register</h2>
           
           <input name='name' placeholder='Name' type='text'
-                 value={this.state.name}
-                 onChange={this.handleChange}
-                 onKeyUp={this.handlePressEnter}
+            value={this.state.name}
+            onChange={this.handleChange}
+            onKeyUp={this.handlePressEnter}
           />
           
           <input name='email' placeholder='E-Mail Address' type='email'
-                 value={this.state.email}
-                 onChange={this.handleChange}
-                 onKeyUp={this.handlePressEnter}
+            value={this.state.email}
+            onChange={this.handleChange}
+            onKeyUp={this.handlePressEnter}
           />
           
           <input name='password' placeholder='Password' type='password'
-                 value={this.state.password}
-                 onChange={this.handleChange}
-                 onKeyUp={this.handlePressEnter}
+            value={this.state.password}
+            onChange={this.handleChange}
+            onKeyUp={this.handlePressEnter}
           />
           
           <input name='re_password' placeholder='Retype Password' type='password'
-                 value={this.state.re_password}
-                 onChange={this.handleChange}
-                 onKeyUp={this.handlePressEnter}
+            value={this.state.re_password}
+            onChange={this.handleChange}
+            onKeyUp={this.handlePressEnter}
           />
           
           <div className='social pt-5 pb-3 d-flex justify-content-center align-items-center'>
@@ -99,6 +99,10 @@ class RegisterScene extends React.Component {
         <style jsx>{style}</style>
       </div>
     );
+  }
+  
+  componentDidMount() {
+    document.querySelector('input[name=name]').focus();
   }
   
   /**

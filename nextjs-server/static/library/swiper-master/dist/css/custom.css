@@ -1,0 +1,19 @@
+.swiper-container .swiper-pagination-green {
+  bottom: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-container .swiper-pagination-green .swiper-pagination-bullet {
+  width: 15px;
+  height: 15px;
+  background-color: rgba(11, 234, 20, 0.52);
+  opacity: 1;
+}
+
+.swiper-container .swiper-pagination-green .swiper-pagination-bullet.swiper-pagination-bullet-active {
+  width: 20px;
+  height: 20px;
+  background-color: rgba(17, 198, 24, 1);
+}

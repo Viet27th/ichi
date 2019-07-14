@@ -1,0 +1,137 @@
+.card {
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.27);
+  position: relative;
+}
+
+.card .wrapper-card-img-top {
+  height: 200px;
+}
+
+.card .wrapper-card-img-top img.card-img-top {
+  height: 100%;
+  object-fit: cover;
+}
+
+.card .card-title {
+  height: 27px;
+  line-height: 27px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  overflow: hidden;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+}
+
+.card .card-title a {
+  color: rgba(120, 177, 68, .9);
+}
+
+.card .card-text {
+  height: 65px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  
+  color: #333;
+  font-size: 14px;
+}
+
+.card .card-body .product-comment {
+  font-size: 13px;
+}
+
+.card .card-body .product-comment i {
+  color: rgba(120, 177, 68, .9);
+}
+
+.card .card-body .card-price {
+  height: 70px;
+  overflow: hidden;
+}
+
+.card .card-body .card-price > span.current-price {
+  font-weight: bold;
+  font-size: 25px;
+  color: rgba(120, 177, 68, .9);
+}
+
+.card .card-body .card-price > span.current-price span.currency {
+  font-size: 18px;
+}
+
+.card .card-body .card-price > span.price-before-discount {
+  color: rgba(0,0,0,.4);
+}
+
+.card .card-body .card-price > span.price-before-discount .has-discount {
+  color: rgba(180, 8, 20, 0.9);
+}
+
+.card .card-body .product-button span {
+  width: 37px;
+  height: 37px;
+  background-color: #ffffff;
+  color: rgba(120, 177, 68, .9);
+  border: 1px solid rgba(120, 177, 68, .9);
+  margin: 9px 4px;
+  padding: 9px;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: all 0.27s ease-in;
+}
+
+.card .card-body .product-button span.active,
+.card .card-body .product-button span:hover{
+  background-color: rgba(120, 177, 68, .9);
+  color: #ffffff;
+}
+
+/* CSS Ribbon */
+/*https://www.cssportal.com/css-ribbon-generator/*/
+.ribbon {
+  position: absolute;
+  left: -5px; top: -5px;
+  z-index: 1;
+  overflow: hidden;
+  width: 75px; height: 75px;
+  text-align: right;
+}
+.ribbon span {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFF;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 20px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  width: 100px;
+  display: block;
+  background: #79A70A;
+  background: linear-gradient(#F70505 0%, #8F0808 100%);
+  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 19px; left: -21px;
+}
+.ribbon span::before {
+  content: "";
+  position: absolute; left: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid #8F0808;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8F0808;
+}
+.ribbon span::after {
+  content: "";
+  position: absolute; right: 0px; top: 100%;
+  z-index: -1;
+  border-left: 3px solid transparent;
+  border-right: 3px solid #8F0808;
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid #8F0808;
+}

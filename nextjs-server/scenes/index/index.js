@@ -6,8 +6,8 @@ import Router from 'next/router';
 import {SpinnerComponentEvolution} from '../../components/spinner';
 import {AlertComponentEvolution} from '../../components/alert';
 import {UserMenuComponent} from '../../components/user_menu';
-import {ProductCardComponent} from './components/product-card';
-import {BlogCardComponent} from './components/blog-card';
+import {ProductCardComponent} from '../../components/product-card';
+import {BlogCardComponent} from '../../components/blog-card';
 import {UserFooterComponent} from '../../components/user_footer';
 
 import {connect} from 'react-redux';
@@ -182,7 +182,7 @@ class IndexScene extends React.Component {
         
         {/* Why choose us */}
         <div className="container-fluid why-choose-us mb-5 text-white"
-             style={{'background-image': 'url(http://demo.vinovathemes.com/prestashop_freshmart/modules/novpagemanage/img/3a0ab0ec94f83b312d42bfc617a296cf.png)'}}>
+             style={{'backgroundImage': 'url(http://demo.vinovathemes.com/prestashop_freshmart/modules/novpagemanage/img/3a0ab0ec94f83b312d42bfc617a296cf.png)'}}>
           <div className="text-center text-capitalize text-bold font-italic h1">Why choose us</div>
           <div className="row justify-content-center">
             <div className="up-left col-6 col-md-4 text-right pb-2">

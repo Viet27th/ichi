@@ -8,7 +8,7 @@ export class UserFooterComponent extends React.Component {
       <div className="container">
         <div id="footer" className="row mb-4">
           <div className="footer-left col-12 col-md-4 text-center text-md-left mb-3"
-            style={{'background-image': 'url(http://demo.vinovathemes.com/prestashop_freshmart/modules/novpagemanage/img/389a58ab0a815f1cc9c6cc9957b018aa.jpg)'}}>
+            style={{'backgroundImage': 'url(http://demo.vinovathemes.com/prestashop_freshmart/modules/novpagemanage/img/389a58ab0a815f1cc9c6cc9957b018aa.jpg)'}}>
             
             <div id="footer-logo" className="text-center mb-3">
               <Link href="">

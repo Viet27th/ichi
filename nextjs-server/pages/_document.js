@@ -22,18 +22,13 @@ class MyDocument extends Document {
           <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
           <link rel="stylesheet" href='/static/library/bootstrap-4.3.1-dist/bootstrap.min.css'/>
           <link rel="stylesheet" href='/static/library/font-awesome/fontawesome-free-5.9.0-web/css/all.css'/>
-          
-          {/*<link rel="stylesheet" type="text/css" href="/static/library/slider-pro-master/dist/css/slider-pro.min.css" media="screen"/>*/}
-        
-        
-        </Head>
-        <body id="body">
-        
+  
           <script src='/static/library/jquery/jquery-3.2.1.min.js'></script>
           <script src='/static/library/popper-1.14.7/popper.min.js'></script>
           <script src='/static/library/bootstrap-4.3.1-dist/bootstrap.min.js'></script>
-          
-          {/*<script type="text/javascript" src="/static/library/slider-pro-master/dist/js/jquery.sliderPro.min.js"></script>*/}
+        
+        </Head>
+        <body id="body">
           
           <Main/>
           <NextScript/>

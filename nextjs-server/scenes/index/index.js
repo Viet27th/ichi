@@ -42,19 +42,19 @@ class IndexScene extends React.Component {
             <div className="swiper-slide">
               {/* Required swiper-lazy class and image source specified in data-src attribute */}
               {/*<img className="w-100 h-100" src="http://localhost:2709/store/banner-2.jpg"/>*/}
-              <img data-src="http://localhost:2709/store/banner-2.jpg" className="swiper-lazy w-100 h-100"/>
+              <img data-src={`${process.env.remoteServer}/store/banner-2.jpg`} className="swiper-lazy w-100 h-100"/>
               {/*Preloader image */}
               <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             </div>
             
             <div className="swiper-slide">
-              <img data-src="http://localhost:2709/store/banner-3.jpg" className="swiper-lazy w-100 h-100"/>
+              <img data-src={`${process.env.remoteServer}/store/banner-3.jpg`} className="swiper-lazy w-100 h-100"/>
               {/*Preloader image */}
               <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             </div>
             
             <div className="swiper-slide">
-              <img data-src="http://localhost:2709/store/banner-1.jpg" className="swiper-lazy w-100 h-100"/>
+              <img data-src={`${process.env.remoteServer}/store/banner-1.jpg`} className="swiper-lazy w-100 h-100"/>
               {/*Preloader image */}
               <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
             </div>
@@ -185,24 +185,24 @@ class IndexScene extends React.Component {
              style={{'backgroundImage': 'url(http://demo.vinovathemes.com/prestashop_freshmart/modules/novpagemanage/img/3a0ab0ec94f83b312d42bfc617a296cf.png)'}}>
           <div className="text-center text-capitalize text-bold font-italic h1">Why choose us</div>
           <div className="row justify-content-center">
-            <div className="up-left col-6 col-md-4 text-right pb-2">
+            <div className="up-left col-6 col-md-4 col-xl-2 text-right pb-2">
               <h5>100% Natural</h5>
               <p className="mb-0">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut labore et dolore
                 magna aliqua.</p>
             </div>
-            <div className="up-right col-6 col-md-4 pb-2">
+            <div className="up-right col-6 col-md-4 col-xl-2 pb-2">
               <h5>Always Fresh</h5>
               <p className="mb-0">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut labore et dolore
                 magna aliqua.</p>
             </div>
           </div>
           <div className="row justify-content-center">
-            <div className="down-left col-6 col-md-4 text-right pt-2">
+            <div className="down-left col-6 col-md-4 col-xl-2 text-right pt-2">
               <h5>Premium Quality</h5>
               <p className="mb-0">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut labore et dolore
                 magna aliqua.</p>
             </div>
-            <div className="down-right col-6 col-md-4 pt-2">
+            <div className="down-right col-6 col-md-4 col-xl-2 pt-2">
               <h5>Supper Healthy</h5>
               <p className="mb-0">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut labore et dolore
                 magna aliqua.</p>

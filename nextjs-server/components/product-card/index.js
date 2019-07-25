@@ -9,7 +9,7 @@ export class ProductCardComponent extends React.Component {
         <div className="card">
           <div className="ribbon"><span>-70%</span></div>
           
-          <Link prefetch href="#">
+          <Link prefetch href="/product?slug=product-1">
             <a className="wrapper-card-img-top d-inline-flex justify-content-center">
               <img className="card-img-top"
                    src="http://demo.vinovathemes.com/prestashop_freshmart/195-home_default/printed-dress.jpg"
@@ -18,7 +18,7 @@ export class ProductCardComponent extends React.Component {
           </Link>
           <div className="card-body">
             <h4 className="card-title">
-              <Link prefetch href="#">
+              <Link prefetch href="/product?slug=product-1">
                 <a className="d-block">Card title</a>
               </Link>
             </h4>

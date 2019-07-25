@@ -87,7 +87,7 @@ class MyApp extends App {
               @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700i&display=swap&subset=vietnamese');
               
               body {
-                font-family: 'Playfair Display', sans-serif;
+                font-family: 'Playfair Display, Roboto, Helvetica Neue, Helvetica, Arial, Sans-serif';
               }
               
               body, #__next {
@@ -123,7 +123,7 @@ class MyApp extends App {
               @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700i&display=swap&subset=vietnamese');
               
               body {
-                font-family: 'Playfair Display', sans-serif;
+                 font-family: 'Playfair Display, Roboto, Helvetica Neue, Helvetica, Arial, Sans-serif';
               }
               
               @media (max-width: 768px) {

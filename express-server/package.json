@@ -15,7 +15,7 @@
     "helmet": "^3.16.0",
     "image-size": "^0.7.4",
     "jsonwebtoken": "^8.5.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "mongoose": "^5.4.18",
     "nodemon": "^1.18.10"
   },
